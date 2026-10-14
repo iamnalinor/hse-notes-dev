@@ -147,3 +147,14 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# --- hse-notes ---
+build/
+.cache/
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+# чужие материалы не коммитим: агенты скачивают их по context/sources.md
+sources/*
+!sources/README.md

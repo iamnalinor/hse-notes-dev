@@ -1,0 +1,32 @@
+{
+  "program": "ПИ ФКН ВШЭ 2026/27",
+  "courses": {
+    "algebra": {
+      "name": "Алгебра",
+      "name_en": "Algebra",
+      "weekday": 2,
+      "has_practice": true
+    },
+    "calculus": {
+      "name": "Математический анализ",
+      "name_en": "Calculus",
+      "weekday": 4,
+      "has_practice": true
+    },
+    "discrete": {
+      "name": "Дискретная математика",
+      "name_en": "Discrete mathematics",
+      "weekday": 4,
+      "has_practice": true
+    },
+    "progintro": {
+      "name": "Введение в программирование",
+      "name_en": "Introduction to Programming",
+      "weekday": 3,
+      "has_practice": false
+    }
+  },
+  "date_exceptions": {
+    "algebra": {"2026-09-03": "разовый перенос на четверг"}
+  }
+}
