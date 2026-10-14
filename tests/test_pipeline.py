@@ -61,7 +61,7 @@ def test_index_single_counter(demo: Path):
     assert labels["fig:lec01:mult"]["number"] == "1.1"
     assert labels["def:lec02:elem"]["number"] == "2.1"
     assert labels["def:lec02:elem"]["basis"] == "forecast"
-    assert {g["term"] for g in idx["glossary"]["algebra"]} == {"Матрица", "Элементарное преобразование"}
+    assert {g["term"] for g in idx["glossary"]["algebra"]} == {"Матрица", "[A]_{ij}", "Элементарное преобразование"}
 
 
 @pytest.mark.skipif(not HAS_TEX, reason="нужен TeX для TikZ → SVG")
@@ -89,7 +89,7 @@ def test_html_blocks_and_refs(demo: Path):
     reg = (site / "algebra" / "registry" / "fragment.html").read_text(encoding="utf-8")
     assert 'data-number="1.3"' in reg and "черновик" in reg
     gl = json.loads((site / "algebra" / "glossary.json").read_text(encoding="utf-8"))
-    assert [g["term"] for g in gl] == ["Матрица", "Элементарное преобразование"]
+    assert [g["term"] for g in gl] == ["[A]_{ij}", "Матрица", "Элементарное преобразование"]
 
 
 def test_latex_blocks(demo: Path, tmp_path: Path):

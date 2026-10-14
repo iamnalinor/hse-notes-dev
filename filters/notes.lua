@@ -615,6 +615,31 @@ local function render(doc)
     Cite = function(cite)
       return resolve_cite(cite)
     end,
+    DefinitionList = function(dl)
+      if not FORMAT_LATEX then return nil end
+      -- термин уходит в \item[…]: «]» внутри формулы закрыл бы аргумент
+      for _, item in ipairs(dl.content) do
+        local term = pandoc.Inlines { pandoc.RawInline('latex', '{') }
+        term:extend(item[1])
+        term:insert(pandoc.RawInline('latex', '}'))
+        item[1] = term
+      end
+      return dl
+    end,
+    Table = function(tbl)
+      if not FORMAT_LATEX then return nil end
+      -- pandoc округляет доли ширины вверх, и сумма > 1 даёт overfull box
+      local total = 0
+      for _, cs in ipairs(tbl.colspecs) do
+        if type(cs[2]) == 'number' then total = total + cs[2] end
+      end
+      if total > 0.97 then
+        for i, cs in ipairs(tbl.colspecs) do
+          if type(cs[2]) == 'number' then tbl.colspecs[i] = { cs[1], cs[2] * 0.97 / total } end
+        end
+        return tbl
+      end
+    end,
     Header = function(h)
       if FORMAT_HTML and h.level <= 3 then
         table.insert(S.toc, { level = h.level, id = h.identifier, text = stringify(h.content) })
