@@ -263,7 +263,7 @@ $$(\sigma \tau)(i) = \tau(\sigma(i)), \qquad i = 1, \dots, n.$$
 
 Для $\sigma = \begin{pmatrix} 1 & 2 & 3 & 4 \\ 4 & 2 & 1 & 3 \end{pmatrix}$: $1 \mapsto 4 \mapsto 3 \mapsto 1$ — цикл замкнулся; осталась двойка, она неподвижна. Получаем $\sigma = (1\, 4\, 3)(2) = (1\, 4\, 3)$ (рис. [-@fig:lec03:cycles]). Независимые циклы перестановочны: они двигают разные элементы, и порядок их применения не важен.
 
-```{.tikz #fig:lec03:cycles caption="Подстановка $\sigma = \begin{pmatrix} 1 & 2 & 3 & 4 \\ 4 & 2 & 1 & 3 \end{pmatrix}$ как граф: стрелка $i \to \sigma(i)$; цикл $(1\, 4\, 3)$ и неподвижная точка $2$"}
+```{.tikz #fig:lec03:cycles caption="Подстановка $\sigma$ с нижней строкой $(4, 2, 1, 3)$ как граф: стрелка $i \to \sigma(i)$; цикл $(1~4~3)$ и неподвижная точка $2$"}
 \begin{tikzpicture}[arr/.style={-{Stealth}, thick, nbblue}, vtx/.style={circle, draw, thick, minimum size=0.7cm}]
   \node[vtx] (a) at (90:1.3) {$1$};
   \node[vtx] (b) at (210:1.3) {$3$};
@@ -271,10 +271,10 @@ $$(\sigma \tau)(i) = \tau(\sigma(i)), \qquad i = 1, \dots, n.$$
   \draw[arr] (a) to[bend left=20] (c);
   \draw[arr] (c) to[bend left=20] (b);
   \draw[arr] (b) to[bend left=20] (a);
-  \node[vtx] (d) at (3.6,0) {$2$};
+  \node[vtx] (d) at (4.2,0) {$2$};
   \draw[arr] (d) to[out=60, in=120, looseness=6] (d);
-  \node[font=\small, align=center] at (0,-2.2) {цикл $(1\,4\,3)$:\ $1 \mapsto 4 \mapsto 3 \mapsto 1$};
-  \node[font=\small, align=center] at (3.6,-2.2) {неподвижный\\элемент};
+  \node[font=\small, align=center] at (0,-2.2) {цикл $(1\,4\,3)$:\\$1 \mapsto 4 \mapsto 3 \mapsto 1$};
+  \node[font=\small, align=center] at (4.2,-2.2) {неподвижный\\элемент};
 \end{tikzpicture}
 ```
 
@@ -365,7 +365,7 @@ $$\det A = \sum_{\sigma \in S_n} \sgn \sigma \cdot a_{1 \sigma(1)} a_{2 \sigma(2
 
 Словами: определитель — сумма $n!$ произведений элементов матрицы, взятых по одному из каждой строки и каждого столбца всеми возможными способами, с учётом знака. В $i$-й строке берётся элемент из столбца $\sigma(i)$; так как $\sigma(1), \dots, \sigma(n)$ — перестановка, столбцы не повторяются. Знак слагаемого — знак подстановки, то есть знак перестановки номеров столбцов при упорядоченных номерах строк (рис. [-@fig:lec03:det-term]).
 
-```{.tikz #fig:lec03:det-term caption="Одно слагаемое определителя $4 \times 4$: элементы по одному из каждой строки и каждого столбца, $\sigma = \begin{pmatrix} 1 & 2 & 3 & 4 \\ 2 & 4 & 1 & 3 \end{pmatrix}$; в перестановке $(2, 4, 1, 3)$ три инверсии, слагаемое $-a_{12} a_{24} a_{31} a_{43}$"}
+```{.tikz #fig:lec03:det-term caption="Одно слагаемое определителя $4 \times 4$: элементы по одному из каждой строки и каждого столбца, нижняя строка $\sigma$ — $(2, 4, 1, 3)$; в перестановке $(2, 4, 1, 3)$ три инверсии, слагаемое $-a_{12} a_{24} a_{31} a_{43}$"}
 \begin{tikzpicture}
   \matrix (m) [matrix of math nodes, left delimiter={(}, right delimiter={)},
     nodes={minimum width=0.95cm, minimum height=0.65cm, anchor=center}] {
