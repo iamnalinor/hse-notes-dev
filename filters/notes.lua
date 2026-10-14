@@ -575,7 +575,7 @@ local function render(doc)
       local id = cb.identifier
       if FORMAT_LATEX then
         local cap = inlines_to('latex', caption)
-        local anchor = id ~= '' and ('\\hypertarget{' .. id .. '}{}') or ''
+        local anchor = id ~= '' and ('\\phantomsection\\label{' .. id .. '}') or ''
         return pandoc.RawBlock('latex',
           '\\begin{nbfigure}' .. anchor .. '\n' .. cb.text .. '\n\\nbfigcaption{' .. number .. '}{' .. cap .. '}\n\\end{nbfigure}')
       end
@@ -598,7 +598,7 @@ local function render(doc)
           local m = inlines[i]
           local math = pandoc.Math('DisplayMath', m.text .. ' \\tag{' .. number .. '}')
           if FORMAT_LATEX then
-            out:insert(pandoc.RawInline('latex', '\\hypertarget{' .. id .. '}{}'))
+            out:insert(pandoc.RawInline('latex', '\\phantomsection\\label{' .. id .. '}'))
             out:insert(math)
           else
             out:insert(pandoc.Span({ math }, { id = id, class = 'nb-eq', ['data-number'] = number }))

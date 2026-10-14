@@ -257,6 +257,8 @@ def build_pdf(doc: Doc, strict: bool) -> list[str]:
         errs = [ln for ln in log_text.splitlines() if ln.startswith("!") or ".tex:" in ln]
         tail = "\n".join(errs[:30]) or res.stdout[-3000:]
         raise BuildError(f"xelatex упал на {doc.rel}:\n{tail}\n(полный лог: {log})")
+    if "There were undefined references" in log_text or "Hyper reference" in log_text:
+        warnings.append(f"{doc.rel}: в PDF есть неразрешённые ссылки (см. {log.name})")
     for m in OVERFULL_RE.finditer(log_text):
         pt = float(m.group(1))
         if pt > 1.0:

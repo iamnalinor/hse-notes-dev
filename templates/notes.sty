@@ -5,7 +5,7 @@
 
 \input{fonts.tex}
 \RequirePackage{amsmath,amssymb,amsthm,mathtools}
-\RequirePackage[a4paper,top=2.4cm,bottom=2.4cm,left=2.3cm,right=2.3cm,headsep=0.6cm]{geometry}
+\RequirePackage[a4paper,top=2.4cm,bottom=2.4cm,left=2.3cm,right=2.3cm,headsep=0.6cm,headheight=14pt]{geometry}
 \RequirePackage{xcolor}
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
@@ -92,7 +92,7 @@
   nb/tag-convention/.style={borderline west={2.2pt}{0pt}{nbconv}},
   nb/tag-reminder/.style={},
 }
-\newcommand{\nbanchor}[1]{\if\relax\detokenize{#1}\relax\else\hypertarget{#1}{}\fi}
+\newcommand{\nbanchor}[1]{\if\relax\detokenize{#1}\relax\else\phantomsection\label{#1}\fi}
 % #1 стиль, #2 пометка (slug), #3 метка; заголовок ставит \nbhead в начале первого абзаца
 \newenvironment{nbblock}[3]{%
   \begin{tcolorbox}[nb/#1, nb/tag-#2]\nbanchor{#3}}{%
