@@ -48,7 +48,7 @@ $$[4, 12, 2] = 4 : [12, 2] = 4 : (12 : [2]) = 4 : (12 : (2 : [\,])).$$
 $$[x_1, x_2, \dots, x_n] := x_1 : (x_2 : (\dots : (x_n : [\,]) \dots)).$$
 Скобки в правой части можно опускать, восстанавливая их справа налево: $x_1 : x_2 : [\,]$ означает $x_1 : (x_2 : [\,])$. Строение строки удобно изображать деревом (рис. [-@fig:lec03:tree]).
 
-```{.tikz #fig:lec03:tree caption="Строка $[4, 12, 2] = 4 : (12 : (2 : [\,]))$: каждый узел «$:$» соединяет голову (слева внизу) с хвостом (справа внизу); справа от узла — строка, которую он задаёт"}
+```{.tikz #fig:lec03:tree caption="Строка $[4, 12, 2] = 4 : (12 : (2 : [\\,]))$: каждый узел «$:$» соединяет голову (слева внизу) с хвостом (справа внизу); справа от узла — строка, которую он задаёт"}
 \begin{tikzpicture}[op/.style={circle, draw, thick, minimum size=7mm, inner sep=0pt}, sym/.style={rectangle, draw, minimum size=6mm, inner sep=2pt}, lbl/.style={nbblue, anchor=west}]
   \node[op] (c1) at (0,0) {$:$};
   \node[sym] (x1) at (-1.1,-1.1) {$4$};
@@ -177,7 +177,7 @@ $$\mathrm{lh}([\,]) = 0, \qquad \mathrm{lh}(x : s) = 1 + \mathrm{lh}(s) \quad \t
 $$\mathrm{lh}([3, 11]) = \mathrm{lh}(3 : (11 : [\,])) = 1 + \mathrm{lh}(11 : [\,]) = 1 + (1 + \mathrm{lh}([\,])) = 1 + (1 + 0) = 2.$$
 :::
 
-Вторая функция — *конкатенация* (append, concatenate), «склейка» двух строк: $\mathrm{app}([1, 3, 2], [3, 2]) = [1, 3, 2, 3, 2]$, $\mathrm{app}([5, 8], [\,]) = \mathrm{app}([\,], [5, 8]) = [5, 8]$.
+Вторая функция — *конкатенация* (append, concatenate), «склейка» двух строк. Хотим, например, $\mathrm{app}([1, 3, 2], [3, 2]) = [1, 3, 2, 3, 2]$ и $\mathrm{app}([5, 8], [\,]) = [5, 8]$, $\mathrm{app}([\,], [5, 8]) = [5, 8]$.
 
 ::: {.definition #def:lec03:app title="конкатенация"}
 $$\mathrm{app}([\,], t) = t, \qquad \mathrm{app}(x : s, t) = x : \mathrm{app}(s, t) \quad \text{для всех } x, s, t.$$
@@ -400,7 +400,8 @@ $$\begin{aligned}
 &= 1 : (3 : \mathrm{app}(2 : [\,], [3, 2])) && \text{правило 2: } x = 3,\ s = [2]\\
 &= 1 : (3 : (2 : \mathrm{app}([\,], [3, 2]))) && \text{правило 2: } x = 2,\ s = [\,]\\
 &= 1 : (3 : (2 : [3, 2])) && \text{правило 1}\\
-&= 1 : (3 : (2 : (3 : (2 : [\,])))) = [1, 3, 2, 3, 2] && \text{сокращение } [x_1, \dots, x_n].
+&= 1 : (3 : (2 : (3 : (2 : [\,])))) && \text{раскрыли } [3, 2]\\
+&= [1, 3, 2, 3, 2] && \text{сокращение } [x_1, \dots, x_n].
 \end{aligned}$$
 *Ключ:* второй аргумент $[3, 2]$ ни разу не раскрывается — рекурсия идёт только по первому.
 :::
@@ -456,7 +457,7 @@ $$\mathrm{init}(y : (z : u)) = y : \mathrm{init}(z : u) = y : \mathrm{init}(\mat
 
 ::: solution
 *Ключ:* обе функции раскрываются только на строке, начинающейся с конструктора, а в левой части с конструктора можно начать только $s$ (замечание [-@rem:lec03:which-var]). *База:* $\mathrm{sum}(\mathrm{app}([\,], t)) = \mathrm{sum}(t) = 0 + \mathrm{sum}(t)$. *Переход:* если $\mathrm{sum}(\mathrm{app}(s, t)) = \mathrm{sum}(s) + \mathrm{sum}(t)$, то
-$$\mathrm{sum}(\mathrm{app}(x : s, t)) = \mathrm{sum}(x : \mathrm{app}(s, t)) = x + \mathrm{sum}(\mathrm{app}(s, t)) = x + \mathrm{sum}(s) + \mathrm{sum}(t) = \mathrm{sum}(x : s) + \mathrm{sum}(t).$$
+$$\begin{aligned}\mathrm{sum}(\mathrm{app}(x : s, t)) &= \mathrm{sum}(x : \mathrm{app}(s, t)) = x + \mathrm{sum}(\mathrm{app}(s, t))\\ &= x + \mathrm{sum}(s) + \mathrm{sum}(t) = \mathrm{sum}(x : s) + \mathrm{sum}(t).\end{aligned}$$
 Индукция по $t$ застряла бы в переходе на выражении $\mathrm{app}(s, x : t)$, для которого правила нет. Это доказательство дословно повторяет доказательство утверждения [-@prop:lec03:lh-app]: $\mathrm{lh}$ — это $\mathrm{sum}$ строки, в которой каждый символ заменён на $1$.
 :::
 
