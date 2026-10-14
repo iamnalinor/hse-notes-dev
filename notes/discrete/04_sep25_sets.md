@@ -287,7 +287,7 @@ x \in \bigcup A &\iff \exists \alpha\, \bigl(x \in \alpha \wedge (\alpha = \{1, 
 &\qquad \vee \exists \alpha\, (x \in \alpha \wedge \alpha = \{2, 4\})\\
 &\iff x \in \{1, 2, 3\} \vee x \in \{1\} \vee x \in \{2, 4\} \iff x = 1 \vee x = 2 \vee x = 3 \vee x = 4.
 \end{aligned}$$
-Во втором переходе использованы дистрибутивность $\wedge$ относительно $\vee$ (логический закон, который проверим в доказательстве теоремы [-@thm:lec04:identities]) и то, что $\exists$ переставляется с $\vee$ (замечание [-@rem:lec02:distribute]).
+Во втором переходе использованы дистрибутивность $P \wedge (Q \vee R) \equiv (P \wedge Q) \vee (P \wedge R)$ (обе части ложны при $[P] = 0$ и равны $[Q \vee R]$ при $[P] = 1$) и то, что $\exists$ переставляется с $\vee$ (замечание [-@rem:lec02:distribute]).
 :::
 
 ::: {.example #ex:lec04:segments}
@@ -333,8 +333,7 @@ x \in \bigcup A &\iff \exists \alpha\, \bigl(x \in \alpha \wedge (\alpha = \{1, 
 
 Из определений: для каждого $x$
 $$x \in A \cup B \iff x \in A \vee x \in B, \quad x \in A \cap B \iff x \in A \wedge x \in B, \quad x \in A \setminus B \iff x \in A \wedge x \notin B.$$
-Два последних — прямо аксиома выделения. Первое получается так же, как в примере [-@ex:lec04:union]:
-$$\begin{aligned}x \in \bigcup\{A, B\} &\iff \exists \alpha\, \bigl(x \in \alpha \wedge (\alpha = A \vee \alpha = B)\bigr)\\ &\iff \exists \alpha\, (x \in \alpha \wedge \alpha = A) \vee \exists \alpha\, (x \in \alpha \wedge \alpha = B) \iff x \in A \vee x \in B.\end{aligned}$$
+Два последних — прямо аксиома выделения, первое получается так же, как в примере [-@ex:lec04:union] (пункт 3): $x \in \bigcup\{A, B\} \iff \exists \alpha\, (x \in \alpha \wedge (\alpha = A \vee \alpha = B)) \iff x \in A \vee x \in B$.
 Операции над множествами — это связки над утверждениями о принадлежности: $\cup$ — это $\vee$, $\cap$ — это $\wedge$, $\setminus$ — это «и не».
 
 ::: {.lemma #lem:lec04:basic-incl title="простейшие включения"}
@@ -570,7 +569,7 @@ $A \times \varnothing = \varnothing$ для любого $A$: если $z \in A 
 $A \times B$ не обязано равняться $B \times A$. Для $A = \{x\}$, $B = \{y\}$ имеем $A \times B = \{(x, y)\}$ и $B \times A = \{(y, x)\}$. Возьмём $x = \varnothing$, $y = \{\varnothing\}$: так как $\varnothing \in y$, множество $y$ непусто и $y \ne x$. По следствию [-@cor:lec04:pair-swap] $(x, y) \ne (y, x)$, поэтому $A \times B \ne B \times A$.
 :::
 
-Произведение и не ассоциативно: элементы $A \times (B \times C)$ — пары $(a, (b, c))$, а элементы $(A \times B) \times C$ — пары $((a, b), c)$, и это разные множества. Тем не менее скобки в произведениях опускают, договорившись расставлять их слева направо:
+Произведение и не ассоциативно: элементы $A \times (B \times C)$ — пары $(a, (b, c))$, а элементы $(A \times B) \times C$ — пары $((a, b), c)$, и, вообще говоря, это разные множества (совпадают они, например, когда один из множителей пуст: тогда обе части равны $\varnothing$). Тем не менее скобки в произведениях опускают, договорившись расставлять их слева направо:
 $$A_1 \times A_2 \times A_3 \times \ldots \times A_n := (\dots((A_1 \times A_2) \times A_3) \times \ldots) \times A_n.$$
 
 ::: {.example #ex:lec04:product-cap}
@@ -578,7 +577,7 @@ $$A_1 \times A_2 \times A_3 \times \ldots \times A_n := (\dots((A_1 \times A_2) 
 
 *Решение.* «$\subseteq$»: пусть $z \in (A \times B) \cap (C \times D)$. Из $z \in A \times B$ получаем $z = (a, b)$ с $a \in A$, $b \in B$. Из $(a, b) \in C \times D$ по замечанию [-@rem:lec04:product-coord] $a \in C$, $b \in D$. Итак, $a \in A \cap C$, $b \in B \cap D$, и $z = (a, b) \in (A \cap C) \times (B \cap D)$. «$\supseteq$»: если $z = (x, y)$ с $x \in A \cap C$, $y \in B \cap D$, то $x \in A$, $y \in B$ дают $z \in A \times B$, а $x \in C$, $y \in D$ — $z \in C \times D$.
 
-На рис. [-@fig:lec04:product] пересечение двух прямоугольников — снова прямоугольник со сторонами $A \cap C$ и $B \cap D$.
+На рис. [-@fig:lec04:product] отрезки $A$ и $C$ не пересекаются, поэтому $A \cap C = \varnothing$ и $(A \times B) \cap (C \times D) = \varnothing$ — «прямоугольник» с пустой стороной. Если бы отрезки $A$ и $C$ (и $B$ и $D$) перекрывались, пересечение прямоугольников было бы прямоугольником $(A \cap C) \times (B \cap D)$.
 :::
 
 ```{.tikz #fig:lec04:product caption="Произведения отрезков на плоскости: $A \times B$ и $C \times D$ закрашены; $(A \cup C) \times (B \cup D)$ содержит ещё два пунктирных квадрата, поэтому оно больше $(A \times B) \cup (C \times D)$"}
@@ -628,7 +627,7 @@ $$A \times C = (A \cap B) \times (C \cap C) = (A \times C) \cap (B \times C) \su
 Тогда $A^{n+1} = A^n \times A$ для всех $n \ge 1$, а в $A^0$ ровно один элемент — как $x^{n+1} = x^n \cdot x$ и $x^0 = 1$ для чисел. Например, $\R^2 = \R \times \R$ — координатная плоскость, $\R^3 = (\R \times \R) \times \R$.
 
 ::: {.remark #rem:lec04:power0 tag="корнер-кейс"}
-Равенство $A^{n+1} = A^n \times A$ при $n = 0$ не выполняется: $A^0 \times A$ состоит из пар $(\varnothing, a)$, а не из элементов $A$. Например, для $A = \{\varnothing\}$ получаем $A^0 \times A = \{(\varnothing, \varnothing)\} = \{\{\{\varnothing\}\}\} \ne \{\varnothing\} = A^1$. Поэтому $A^1$ задаётся отдельно. При этом $\varnothing^0 = \{\varnothing\}$ — одноэлементное множество, а $\varnothing^n = \varnothing$ при $n \ge 1$ (пример [-@ex:lec04:product-empty]): как $0^0 = 1$ и $0^n = 0$.
+Равенство $A^{n+1} = A^n \times A$ при $n = 0$, вообще говоря, не выполняется (при $A \ne \varnothing$): $A^0 \times A$ состоит из пар $(\varnothing, a)$, а не из элементов $A$. Например, для $A = \{\varnothing\}$ получаем $A^0 \times A = \{(\varnothing, \varnothing)\} = \{\{\{\varnothing\}\}\} \ne \{\varnothing\} = A^1$. Поэтому $A^1$ задаётся отдельно. При этом $\varnothing^0 = \{\varnothing\}$ — одноэлементное множество, а $\varnothing^n = \varnothing$ при $n \ge 1$ (пример [-@ex:lec04:product-empty]): как $0^0 = 1$ и $0^n = 0$.
 :::
 
 ::: {.definition #def:lec04:tuple title="кортеж"}
@@ -717,7 +716,7 @@ $A \mathbin{\triangle} B$ — элементы, лежащие ровно в о�
 :::
 
 ::: answer
-Два включения через произвольный элемент; ключевое — замечание [-@rem:lec04:product-coord].
+Верно; два включения через произвольный элемент, в каждом — разбор случаев $x \in A$ / $x \in B$.
 :::
 
 ::: solution
@@ -725,7 +724,7 @@ $A \mathbin{\triangle} B$ — элементы, лежащие ровно в о�
 
 «$\supseteq$»: пусть $z \in A \times C$ (случай $z \in B \times C$ симметричен). Тогда $z = (x, c)$ с $x \in A \subseteq A \cup B$ и $c \in C$, значит, $z \in (A \cup B) \times C$.
 
-*Ключ:* в отличие от замечания [-@rem:lec04:product-union], «$\cup$» стоит только в одном множителе, поэтому лишних «перекрёстных» пар не появляется: на рис. [-@fig:lec04:product] это два квадрата в одной полосе $B$, а не четыре.
+*Ключ:* в отличие от замечания [-@rem:lec04:product-union], «$\cup$» стоит только в одном множителе, поэтому лишних «перекрёстных» пар не появляется: на рис. [-@fig:lec04:product] (где роль $C$ задачи играет отрезок $B$, а роль $B$ задачи — отрезок $C$) это квадраты $A \times B$ и $C \times B$ — одна горизонтальная полоса $(A \cup C) \times B$, без «перекрёстных» квадратов.
 :::
 
 ::: {.problem #prob:lec04:identities}
@@ -748,7 +747,7 @@ b) *Ключ:* по таблице принадлежности (пример [-
 :::
 
 ::: answer
-Оба утверждения верны; $\mathcal{P}(\bigcup A) = A$ неверно в общем случае: при $A = \{\{1\}\}$ получаем $\mathcal{P}(\bigcup A) = \{\varnothing, \{1\}\} \ne A$.
+Оба утверждения верны; $\mathcal{P}(\bigcup A) = A$ в общем случае неверно: при $A = \{\{1\}\}$ получаем $\mathcal{P}(\bigcup A) = \{\varnothing, \{1\}\} \ne A$. Равенство выполнено тогда и только тогда, когда $A = \mathcal{P}(Y)$ для некоторого $Y$.
 :::
 
 ::: solution
@@ -756,7 +755,7 @@ $\bigcup \mathcal{P}(A) = A$. «$\subseteq$»: если $x \in \bigcup \mathcal{
 
 $A \subseteq \mathcal{P}(\bigcup A)$: пусть $\alpha \in A$. Каждый элемент $x \in \alpha$ лежит в $\bigcup A$ (свидетель — $\alpha$), значит, $\alpha \subseteq \bigcup A$, то есть $\alpha \in \mathcal{P}(\bigcup A)$.
 
-Для $A = \{\{1\}\}$: $\bigcup A = \{1\}$ (пример [-@ex:lec04:union]), $\mathcal{P}(\{1\}) = \{\varnothing, \{1\}\}$, а $\varnothing \notin A$. Включение строгое: $\mathcal{P}(\bigcup A)$ содержит все подмножества, а $A$ — только некоторые.
+Для $A = \{\{1\}\}$: $\bigcup A = \{1\}$ (пример [-@ex:lec04:union]), $\mathcal{P}(\{1\}) = \{\varnothing, \{1\}\}$, а $\varnothing \notin A$, так что здесь включение строгое. Равенство $\mathcal{P}(\bigcup A) = A$ бывает, например, при $A = \mathcal{P}(Y)$: тогда $\bigcup A = Y$ (пример выше), и $\mathcal{P}(\bigcup A) = \mathcal{P}(Y) = A$; так, при $A = \{\varnothing\} = \mathcal{P}(\varnothing)$ имеем $\bigcup A = \varnothing$ и $\mathcal{P}(\varnothing) = A$. Наоборот, если $\mathcal{P}(\bigcup A) = A$, то $A = \mathcal{P}(Y)$ при $Y = \bigcup A$; итак, равенство верно ровно для множеств вида $\mathcal{P}(Y)$.
 :::
 
 # Итоги
@@ -844,7 +843,7 @@ $(a_1, \dots, a_n)$ (кортеж)
 3. Найдите $\bigcup \{\{1, 2\}, \{2, 3\}, \varnothing\}$.
 4. Докажите, что не существует множеств $a$ и $b$ таких, что $a \in b$ и $b \in a$.
 5. Постройте отрицание утверждения $\forall x \in A\ \exists y \in B\ (x < y)$ (числа вещественные) так, чтобы $\neg$ не стояло перед кванторами. Истинно ли исходное утверждение при $A = \varnothing$? При $A = \{0\}$, $B = \varnothing$?
-6. Докажите, не пользуясь аксиомой основания, что множества всех множеств не существует.
+6. Докажите, что не существует множества $S$, содержащего все одноэлементные множества.
 7. Докажите, что если $C \subseteq A$ и $C \subseteq B$, то $C \subseteq A \cap B$.
 8. Равны ли пары $(\varnothing, \{\varnothing\})$ и $(\{\varnothing\}, \varnothing)$? Запишите пару $(\varnothing, \varnothing)$ как множество, построенное из $\varnothing$ и фигурных скобок.
 9. Докажите или опровергните: $(A \cup B) \setminus C = A \cup (B \setminus C)$.
@@ -856,7 +855,7 @@ $(a_1, \dots, a_n)$ (кортеж)
 3. $\{1, 2, 3\}$: пустое множество ничего не добавляет.
 4. Иначе $a \ni b \ni a \ni b \ni \dots$ — бесконечная цепочка, запрещённая аксиомой [-@ax:lec04:foundation].
 5. $\exists x \in A\ \forall y \in B\ (x \ge y)$. При $A = \varnothing$ исходное истинно (пустая истина), а отрицание ложно. При $A = \{0\}$, $B = \varnothing$ исходное ложно: для $x = 0$ нет $y \in \varnothing$.
-6. Если $V$ содержит все множества, то $R_V = \{x \in V \mid x \notin x\}$ существует по аксиоме выделения и $R_V \in V$; тогда $R_V \in R_V \iff R_V \notin R_V$ — противоречие (следствие [-@cor:lec04:no-universal]).
+6. Тогда $\bigcup S$ содержало бы каждое множество $x$, так как $x \in \{x\} \in S$, — противоречие со следствием [-@cor:lec04:no-universal].
 7. Пусть $x \in C$; тогда $x \in A$ и $x \in B$, то есть $x \in A \cap B$. Через тождества: $C = C \cap A$, $C = C \cap B$, откуда $C = C \cap (A \cap B)$, и по лемме [-@lem:lec04:subset-equiv] $C \subseteq A \cap B$.
 8. Нет, по следствию [-@cor:lec04:pair-swap], так как $\varnothing \ne \{\varnothing\}$. $(\varnothing, \varnothing) = \{\{\varnothing\}, \{\varnothing, \varnothing\}\} = \{\{\varnothing\}\}$.
 9. Неверно: при $A = C = \{1\}$, $B = \varnothing$ слева $\varnothing$, справа $\{1\}$ (строка $101$ таблицы принадлежности).
