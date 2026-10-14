@@ -1,0 +1,113 @@
+---
+course: discrete
+title: Реестр теории по дискретной математике
+based_on: конспекты лекций 1–2
+---
+
+# Соглашения курса и ключевые корнер-кейсы
+
+- $0 \in \N$: $\N = \{0, 1, 2, \dots\}$, положительные натуральные — $\N_+$ (замечание [-@rem:lec01:nat]); в матанализе соглашение обратное.
+- Импликация $A \to B$ ложна только при $[A] = 1$, $[B] = 0$; при ложной посылке она истинна (замечание [-@rem:lec01:why-implication]).
+- «$A$, только если $B$» и «$A$ достаточно для $B$» — это $A \to B$; «$A$ необходимо для $B$» и «$A$, если $B$» — это $B \to A$ (замечание [-@rem:lec01:only-if]).
+- Скобки в $A \to B \to C$ и $A \wedge B \vee C$ не опускаются: правил приоритета для них нет (замечание [-@rem:lec01:no-priority]).
+- Проверка тавтологии «от противного» требует разобрать все ветки развилки (замечание [-@rem:lec01:branches]).
+- При $\forall$ условие ставят импликацией, при $\exists$ — конъюнкцией (замечание [-@rem:lec02:forall-imp]).
+- Предметная область квантора всегда непуста (замечание [-@rem:lec02:nonempty]); $\forall x\, (A(x) \to B(x))$ при пустом $A$ — пустая истина (определение [-@def:lec02:vacuous]).
+- $\exists x\, A \wedge \exists x\, B \not\equiv \exists x\, (A \wedge B)$, $\forall x\, (A \vee B) \not\equiv \forall x\, A \vee \forall x\, B$ (замечание [-@rem:lec02:distribute]).
+
+# Лекция 1 — Истинность, ложность и высказывания
+
+::: {.definition ref="def:lec01:statement"}
+Высказывание — модель повествовательного предложения, которая либо истинна, либо ложна, но не то и другое одновременно.
+:::
+
+::: {.definition ref="def:lec01:truth-value"}
+$[A] = 1$, если $A$ истинно, и $[A] = 0$, если ложно.
+:::
+
+::: {.definition ref="def:lec01:connective"}
+Связка $F$: $[F(A_1, \dots, A_n)] = f([A_1], \dots, [A_n])$ для некоторой функции $f$ — значение целого зависит только от значений частей.
+:::
+
+::: {.definition ref="def:lec01:atom"}
+Атом — высказывание, которое нельзя разумно разбить на более простые связками.
+:::
+
+::: {.definition ref="def:lec01:connectives"}
+$\neg A$, $A \wedge B$, $A \vee B$, $A \to B$, $A \leftrightarrow B$ заданы таблицей истинности; $A \to B$ ложна только при $[A] = 1$, $[B] = 0$, $A \leftrightarrow B$ истинна при $[A] = [B]$.
+:::
+
+::: {.proposition ref="prop:lec01:arith" status="доказано в лекции 1"}
+$[A \wedge B] = \min = [A][B]$, $[A \vee B] = \max$, $[\neg A] = 1 - [A]$, $[A \to B] = 1 \iff [A] \le [B]$, $[A \leftrightarrow B] = 1 \iff [A] = [B]$. *Идея:* проверка по четырём строкам таблицы.
+:::
+
+::: {.definition ref="def:lec01:formula"}
+Формула $F(A_1, \dots, A_n)$ строится из $A_1, \dots, A_n$ связками; не каждый $A_i$ обязан входить. Приоритет: $\neg$, затем $\wedge, \vee$, затем $\to$; $X \wedge Y \wedge Z = (X \wedge Y) \wedge Z$.
+:::
+
+::: {.definition ref="def:lec01:equivalence"}
+$F \equiv G$, если $[F] = [G]$ при всех значениях атомов.
+:::
+
+::: {.proposition ref="prop:lec01:laws" status="доказано в лекции 1"}
+Коммутативность и ассоциативность $\wedge$, $\vee$; $\neg\neg A \equiv A$; $A \to B \equiv \neg A \vee B$; $\neg(A \to B) \equiv A \wedge \neg B$; контрапозиция $A \to B \equiv \neg B \to \neg A$; законы де Моргана; $A \leftrightarrow B \equiv (A \to B) \wedge (B \to A)$. *Идея:* сравнить случаи ложности (истинности) обеих частей.
+:::
+
+::: {.definition ref="def:lec01:tautology"}
+Тавтология — формула, истинная при всех значениях атомов.
+:::
+
+::: {.definition ref="def:lec01:satisfiable"}
+Выполнимая формула — истинная хотя бы при одном наборе значений атомов.
+:::
+
+::: {.proposition ref="prop:lec01:taut-sat" status="доказано в лекции 1"}
+$F$ выполнима $\iff$ $\neg F$ не тавтология; $F$ — тавтология $\iff$ $\neg F$ невыполнима $\iff$ $F \equiv T$ для тавтологии $T$; $F \equiv G \iff F \leftrightarrow G$ — тавтология. *Идея:* отрицание меняет «при всех наборах» на «при некотором наборе».
+:::
+
+::: {.definition ref="def:lec01:valid"}
+Рассуждение «$A_1, \dots, A_n$; следовательно, $C$» корректно, если не бывает истинных посылок при ложном выводе.
+:::
+
+::: {.proposition ref="prop:lec01:valid-taut" status="доказано в лекции 1"}
+Если $(A_1 \wedge \ldots \wedge A_n) \to C$ — тавтология, рассуждение корректно; обратное неверно. *Идея:* при истинных посылках истинная импликация даёт истинный вывод.
+:::
+
+# Лекция 2 — Язык математики. Предикаты и кванторы
+
+::: {.definition ref="def:lec02:predicate"}
+$n$-местный предикат — выражение с переменными $x_1, \dots, x_n$, которое становится высказыванием после подстановки подходящих объектов вместо всех переменных; высказывание — нульместный предикат.
+:::
+
+::: {.definition ref="def:lec02:domain"}
+Предметная область переменной — совокупность объектов, которые разрешено подставлять вместо неё.
+:::
+
+::: {.definition ref="def:lec02:quantifiers"}
+$\exists x\, A(x)$ истинно, если $A(a)$ истинно хотя бы для одного объекта $a$ области; $\forall x\, A(x)$ — если для каждого.
+:::
+
+::: {.definition ref="def:lec02:bound"}
+Вхождение переменной связано, если оно в области действия квантора по ней, иначе свободно; формула без свободных переменных — высказывание. Квантор связывает сильнее бинарных связок.
+:::
+
+::: {.proposition ref="prop:lec02:quant-neg" status="доказано в лекции 2 (по смыслу кванторов)"}
+$\exists x\, A \equiv \neg\forall x\, \neg A$, $\forall x\, A \equiv \neg\exists x\, \neg A$; $\neg\forall x\, A \equiv \exists x\, \neg A$, $\neg\exists x\, A \equiv \forall x\, \neg A$. *Идея:* на конечной области это законы де Моргана для «длинных» $\wedge$ и $\vee$.
+:::
+
+::: {.definition ref="def:lec02:unique"}
+«Существует единственный»: $\exists x\, (A(x) \wedge \forall y\, (A(y) \to y = x))$, сокращение $\exists ! x\, A(x)$.
+:::
+
+::: {.proposition ref="prop:lec02:order" status="доказано в лекции 2"}
+$\exists y\, \forall x\, A(x, y)$ влечёт $\forall x\, \exists y\, A(x, y)$; обратное неверно. *Идея:* один свидетель $y_0$ годится для всех $x$; контрпример к обратному — $\forall x\, \exists y\, (y > x)$ в $\N$.
+:::
+
+::: {.definition ref="def:lec02:vacuous"}
+Пустая истина — $\forall x\, (A(x) \to B(x))$, истинное потому, что $A(x)$ ложно для всех $x$.
+:::
+
+# Глоссарий курса
+
+::: course-glossary
+:::
