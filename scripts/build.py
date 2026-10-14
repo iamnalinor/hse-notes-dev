@@ -28,6 +28,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -140,9 +141,9 @@ def run_pandoc(doc: Doc, to: str, out: Path, extra: list[str]) -> None:
 
 
 def build_index(docs: list[Doc], jobs: int) -> dict:
-    idx_dir = BUILD / "idx"
-    if idx_dir.exists():
-        shutil.rmtree(idx_dir)
+    # отдельная временная папка на каждый запуск: агенты могут собирать параллельно
+    BUILD.mkdir(parents=True, exist_ok=True)
+    idx_dir = Path(tempfile.mkdtemp(prefix="idx-", dir=BUILD))
 
     def one(doc: Doc) -> Path:
         out = idx_dir / doc.course / f"{doc.out_name}.json"
@@ -195,8 +196,10 @@ def build_index(docs: list[Doc], jobs: int) -> dict:
     for v in lectures.values():
         v.sort(key=lambda x: x["lecture"])
     index = {"labels": labels, "glossary": glossary, "lectures": lectures}
-    BUILD.mkdir(exist_ok=True)
-    (BUILD / "index.json").write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding="utf-8")
+    shutil.rmtree(idx_dir, ignore_errors=True)
+    tmp = BUILD / f"index.json.{os.getpid()}"
+    tmp.write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding="utf-8")
+    os.replace(tmp, BUILD / "index.json")
     return index
 
 
