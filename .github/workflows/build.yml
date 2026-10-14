@@ -2,7 +2,8 @@ name: Build notes
 
 on:
   push:
-    branches: [main]
+    branches: ['**']   # на любой ветке — PDF в artifacts; релиз latest — только из main
+    tags-ignore: ['**']
   pull_request:
   workflow_dispatch:
 
