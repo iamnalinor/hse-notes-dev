@@ -112,17 +112,17 @@ $D(x)$ = «$x^2 \ge 4$» — предикат от одной переменно
 ```{.tikz #fig:lec01:order caption="Множество точек $(x, y)$ с $x^2 \ge y$ (закрашено). $\forall x\, \exists y$: каждая вертикальная прямая задевает закрашенную область. $\exists y\, \forall x$: есть горизонтальная прямая, целиком лежащая в ней. $\forall x\, \forall y$ неверно: точка $(0, 1)$ не закрашена"}
 \begin{tikzpicture}
 \begin{axis}[nbaxis, xmin=-2.6, xmax=2.6, ymin=-1.9, ymax=4.6, width=10cm, height=7cm,
-  xtick={-2,-1,1,2}, ytick={-1,1,2,3,4}]
+  xtick={-2,-1,1,2}, ytick={1,2,3,4}]
   \addplot[name path=par, thick, nbblue, domain=-2.4:2.4] {x^2};
   \path[name path=bot] (axis cs:-2.4,-1.8) -- (axis cs:2.4,-1.8);
   \addplot[nbblue!15] fill between[of=par and bot];
-  \draw[nborange, thick] (axis cs:1.5,-1.8) -- (axis cs:1.5,4.4);
+  \addplot[draw=nborange, line width=1pt] coordinates {(1.5,-1.8) (1.5,4.4)};
   \node[nborange, anchor=west, font=\small] at (axis cs:1.55,3.4) {$x = 1{,}5$};
   \node[dot, nborange] at (axis cs:1.5,2.25) {};
   \node[nborange, anchor=west, font=\small] at (axis cs:1.55,1.9) {$y = x^2$};
-  \draw[nbgreen, thick] (axis cs:-2.4,-1) -- (axis cs:2.4,-1);
-  \node[nbgreen, anchor=south west, font=\small] at (axis cs:-2.4,-1) {$y = -1$ подходит всем $x$};
-  \node[hole, nbred] at (axis cs:0,1) {};
+  \addplot[nbgreen, thick] coordinates {(-2.4,-1) (2.4,-1)};
+  \node[nbgreen, anchor=north west, font=\small] at (axis cs:-2.4,-1.05) {$y = -1$ подходит всем $x$};
+  \node[dot, nbred] at (axis cs:0,1) {};
   \node[nbred, anchor=west, font=\small] at (axis cs:0.1,1.05) {$(0, 1)$};
   \node[nbblue, font=\small] at (axis cs:-1.65,3.9) {$y = x^2$};
 \end{axis}
@@ -393,8 +393,8 @@ $$\forall n \in \N\ \ \forall x \ge -1\colon\ (1 + x)^n \ge 1 + nx.$$ {#eq:lec01
 
 ```{.tikz #fig:lec01:bernoulli caption="Неравенство Бернулли при $n = 3$: график $y = (1 + x)^3$ не ниже прямой $y = 1 + 3x$ при $x \ge -1$; касание в точке $x = 0$. При $x < -3$ неравенство нарушается"}
 \begin{tikzpicture}
-\begin{axis}[nbaxis, xmin=-4.2, xmax=1.5, ymin=-22, ymax=9, width=11cm, height=7.5cm,
-  xtick={-4,-3,-2,-1,1}, ytick={-20,-10,-8,1,4}]
+\begin{axis}[nbaxis, axis on top, xmin=-4.2, xmax=1.5, ymin=-22, ymax=9, width=11cm, height=7.5cm,
+  xtick={-3,-1,1}, ytick={-8}]
   \fill[nbgreen!10] (axis cs:-1,-22) rectangle (axis cs:1.5,9);
   \addplot[thick, nbblue, domain=-3.75:1.08] {(1+x)^3};
   \addplot[thick, nbred, domain=-4.1:1.5] {1+3*x};
@@ -404,8 +404,8 @@ $$\forall n \in \N\ \ \forall x \ge -1\colon\ (1 + x)^n \ge 1 + nx.$$ {#eq:lec01
   \draw[aux] (axis cs:-1,-22) -- (axis cs:-1,9);
   \node[nbgreen!60!black, anchor=north west, font=\small, align=left] at (axis cs:-0.95,-12) {$x \ge -1$:\\ теорема};
   \node[nbblue, anchor=east, font=\small] at (axis cs:1.05,7.5) {$y = (1+x)^3$};
-  \node[nbred, anchor=west, font=\small] at (axis cs:0.25,-1.5) {$y = 1 + 3x$};
-  \node[nbred, anchor=south, font=\small, align=center] at (axis cs:-3.55,-4) {здесь\\ $(1+x)^3 < 1 + 3x$};
+  \node[nbred, anchor=north east, font=\small] at (axis cs:1.5,2.3) {$y = 1 + 3x$};
+  \node[nbred, anchor=north west, font=\small, align=left] at (axis cs:-4.15,-2.5) {при $x < -3$:\\ $(1+x)^3 < 1 + 3x$};
 \end{axis}
 \end{tikzpicture}
 ```
@@ -710,8 +710,10 @@ $n \mathrel{\vdots} m$
 6. Докажите, что $1 + 3 + 5 + \dots + (2n - 1) = n^2$ при всех $n \in \N$.
 7. Найдите ошибку: «Докажем, что $n^2 + n$ нечётно при всех $n$. Пусть $k^2 + k$ нечётно. Тогда $(k+1)^2 + (k+1) = (k^2 + k) + 2(k + 1)$ — нечётное плюс чётное, то есть нечётно».
 8. Последовательность: $b_1 = 1$, $b_2 = 3$, $b_{n+2} = 3b_{n+1} - 2b_n$. Найдите формулу $b_n$ и докажите её.
-9. С помощью неравенства Бернулли докажите, что $0{,}99^{50} \ge \frac12$.
-10. Приведите $n$ и $x$, при которых $(1 + x)^n < 1 + nx$. Почему это не противоречит теореме Бернулли?
+9. Докажите, что $2^n > 2n + 1$ при всех натуральных $n \ge 3$. Верно ли неравенство при $n = 1, 2$?
+10. Докажите, что $7^n - 1$ делится на $6$ при всех $n \in \N$.
+11. С помощью неравенства Бернулли докажите, что $0{,}99^{50} \ge \frac12$.
+12. Приведите $n$ и $x$, при которых $(1 + x)^n < 1 + nx$. Почему это не противоречит теореме Бернулли?
 
 ::: answers
 1. «$x + 1 > x$» — предикат (истинный при всех $x$); «$\forall x \in \R\ x + 1 > x$» — истинное высказывание; «$7$ — простое число» — истинное высказывание.
@@ -722,6 +724,8 @@ $n \mathrel{\vdots} m$
 6. База $1 = 1^2$; переход $k^2 + (2k + 1) = (k + 1)^2$.
 7. Нет базы: при $n = 1$ число $1 + 1 = 2$ чётно; на самом деле $n^2 + n = n(n+1)$ чётно при всех $n$. Переход верен, но запускать его нечем.
 8. $b_n = 2^n - 1$. Индукция с двумя базами: $b_1 = 1$, $b_2 = 3$; $3(2^{k+1} - 1) - 2(2^k - 1) = 2^{k+2} - 1$.
-9. $x = -0{,}01 \ge -1$, $n = 50$: $0{,}99^{50} \ge 1 - 50 \cdot 0{,}01 = \frac12$.
-10. Например, $n = 3$, $x = -4$: $-27 < -11$. Противоречия нет: теорема требует $x \ge -1$.
+9. База $n = 3$: $8 > 7$. Переход: $2^{k+1} = 2 \cdot 2^k > 4k + 2 \ge 2k + 3$, так как $2k \ge 1$. При $n = 1$: $2 > 3$ — неверно; при $n = 2$: $4 > 5$ — неверно.
+10. База: $7 - 1 = 6$. Переход: $7^{k+1} - 1 = 7(7^k - 1) + 6$.
+11. $x = -0{,}01 \ge -1$, $n = 50$: $0{,}99^{50} \ge 1 - 50 \cdot 0{,}01 = \frac12$.
+12. Например, $n = 3$, $x = -4$: $-27 < -11$. Противоречия нет: теорема требует $x \ge -1$.
 :::

@@ -346,10 +346,10 @@ $$\begin{aligned}
 \mathrm{rev}(\mathrm{app}(x : s, t)) &= \mathrm{rev}(x : \mathrm{app}(s, t)) && \text{определение } \mathrm{app}\\
 &= \mathrm{app}(\mathrm{rev}(\mathrm{app}(s, t)), [x]) && \text{определение } \mathrm{rev}\\
 &= \mathrm{app}(\mathrm{app}(\mathrm{rev}(t), \mathrm{rev}(s)), [x]) && \text{предположение индукции}\\
-&= \mathrm{app}(\mathrm{rev}(t), \mathrm{app}(\mathrm{rev}(s), [x])) && \text{лемма [-@lem:lec03:app-assoc]}\\
+&= \mathrm{app}(\mathrm{rev}(t), \mathrm{app}(\mathrm{rev}(s), [x])) && \text{ассоциативность } \mathrm{app}\\
 &= \mathrm{app}(\mathrm{rev}(t), \mathrm{rev}(x : s)) && \text{определение } \mathrm{rev}.
 \end{aligned}$$
-По (ПИ) равенство верно для всех $s$, а $t$ было произвольным.
+Ассоциативность в четвёртом шаге — лемма [-@lem:lec03:app-assoc]. По (ПИ) равенство верно для всех $s$, а $t$ было произвольным.
 :::
 
 Для чисел и матриц $(p^{-1})^{-1} = p$ и $(A^T)^T = A$. У строк то же самое.
@@ -421,11 +421,13 @@ $$\mathrm{lh}(\mathrm{rev}(x : s)) = \mathrm{lh}(\mathrm{app}(\mathrm{rev}(s), [
 :::
 
 ::: {.problem #prob:lec03:init}
-a) Дайте рекурсивное определение функции $\mathrm{init}$, удаляющей последний символ строки: $\mathrm{init}([\,]) = [\,]$, $\mathrm{init}([1, 2, 3]) = [1, 2]$. b) Докажите, что $\mathrm{init}(\mathrm{app}(s, [x])) = s$ для всех $s \in S(A)$ и $x \in A$.
+a) Дайте рекурсивное определение функции $\mathrm{init}$, удаляющей последний символ строки: $\mathrm{init}([\,]) = [\,]$, $\mathrm{init}([1, 2, 3]) = [1, 2]$;
+b) докажите, что $\mathrm{init}(\mathrm{app}(s, [x])) = s$ для всех $s \in S(A)$ и $x \in A$.
 :::
 
 ::: answer
-a) $\mathrm{init}([\,]) = [\,]$, $\mathrm{init}(x : [\,]) = [\,]$, $\mathrm{init}(x : (y : s)) = x : \mathrm{init}(y : s)$. b) Индукция по $s$; в переходе нужна лемма [-@lem:lec03:app-empty], чтобы увидеть, что $\mathrm{app}(s, [x])$ непуста.
+a) $\mathrm{init}([\,]) = [\,]$, $\mathrm{init}(x : [\,]) = [\,]$, $\mathrm{init}(x : (y : s)) = x : \mathrm{init}(y : s)$;
+b) индукция по $s$; в переходе нужна лемма [-@lem:lec03:app-empty], чтобы увидеть, что $\mathrm{app}(s, [x])$ непуста.
 :::
 
 ::: solution
