@@ -393,7 +393,7 @@ $$\forall n \in \N\ \ \forall x \ge -1\colon\ (1 + x)^n \ge 1 + nx.$$ {#eq:lec01
 
 ```{.tikz #fig:lec01:bernoulli caption="Неравенство Бернулли при $n = 3$: график $y = (1 + x)^3$ не ниже прямой $y = 1 + 3x$ при $x \ge -1$; касание в точке $x = 0$. При $x < -3$ неравенство нарушается"}
 \begin{tikzpicture}
-\begin{axis}[nbaxis, axis on top, xmin=-4.2, xmax=1.5, ymin=-22, ymax=9, width=11cm, height=7.5cm,
+\begin{axis}[nbaxis, axis on top, clip=false, xmin=-4.2, xmax=1.5, ymin=-22, ymax=9, width=10cm, height=7.5cm,
   xtick={-3,-1,1}, ytick={-8}]
   \fill[nbgreen!10] (axis cs:-1,-22) rectangle (axis cs:1.5,9);
   \addplot[thick, nbblue, domain=-3.75:1.08] {(1+x)^3};
@@ -403,9 +403,10 @@ $$\forall n \in \N\ \ \forall x \ge -1\colon\ (1 + x)^n \ge 1 + nx.$$ {#eq:lec01
   \node[nbred, anchor=north west, font=\small] at (axis cs:-2.95,-8.3) {$(-3; -8)$};
   \draw[aux] (axis cs:-1,-22) -- (axis cs:-1,9);
   \node[nbgreen!60!black, anchor=north west, font=\small, align=left] at (axis cs:-0.95,-12) {$x \ge -1$:\\ теорема};
-  \node[nbblue, anchor=east, font=\small] at (axis cs:1.05,7.5) {$y = (1+x)^3$};
+  \node[nbblue, anchor=west, font=\small] at (axis cs:1.1,7.6) {$y = (1+x)^3$};
   \node[nbred, anchor=north east, font=\small] at (axis cs:1.5,2.3) {$y = 1 + 3x$};
-  \node[nbred, anchor=north west, font=\small, align=left] at (axis cs:-4.15,-2.5) {при $x < -3$:\\ $(1+x)^3 < 1 + 3x$};
+  \node[nbred, anchor=north west, font=\small, align=left] (bad) at (axis cs:-3.25,-14.5) {при $x < -3$:\\ $(1+x)^3 < 1 + 3x$};
+  \draw[->, nbred] (bad.west) -- (axis cs:-3.6,-13.5);
 \end{axis}
 \end{tikzpicture}
 ```

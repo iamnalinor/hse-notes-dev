@@ -1,7 +1,7 @@
 ---
 course: discrete
 title: Реестр теории по дискретной математике
-based_on: конспекты лекций 1–2
+based_on: конспекты лекций 1–4
 ---
 
 # Соглашения курса и ключевые корнер-кейсы
@@ -15,6 +15,11 @@ based_on: конспекты лекций 1–2
 - Предметная область квантора всегда непуста (замечание [-@rem:lec02:nonempty]); $\forall x\, (A(x) \to B(x))$ при пустом $A$ — пустая истина (определение [-@def:lec02:vacuous]).
 - Связанную переменную переименовывают только в новую букву, иначе свободная переменная окажется захвачена: $\exists x\, (x < y)$ и $\exists y\, (y < y)$ — разные формулы (замечание [-@rem:lec02:rename]).
 - $\exists x\, A \wedge \exists x\, B \not\equiv \exists x\, (A \wedge B)$, $\forall x\, (A \vee B) \not\equiv \forall x\, A \vee \forall x\, B$ (замечание [-@rem:lec02:distribute]).
+- Принцип индукции для строк — аксиома, не выводимая из (A1), (A2); индукцию ведут по аргументу рекурсии (замечание [-@rem:lec03:which-var]).
+- $\in$ и $\subseteq$ различаются: $\varnothing \subseteq X$ всегда, $\varnothing \in X$ — не всегда; $a \ne \{a\}$; $\in$ не транзитивно (замечания [-@rem:lec04:empty-table], [-@rem:lec04:singleton]).
+- $\forall x \in \varnothing\ \varphi$ истинно, $\exists x \in \varnothing\ \varphi$ ложно (замечание [-@rem:lec04:bounded-empty]).
+- $(A \cup B) \setminus B = A \setminus B$, а не $A$; $(A \times B) \cup (C \times D) \ne (A \cup C) \times (B \cup D)$ (замечания [-@rem:lec04:minus], [-@rem:lec04:product-union]).
+- Сокращать $A \times C \subseteq B \times C$ на $C$ можно только при $C \ne \varnothing$ (замечание [-@rem:lec04:cancel-empty]); $A^0 = \{\varnothing\}$.
 
 # Лекция 1 — Истинность, ложность и высказывания
 
@@ -106,6 +111,170 @@ $\exists y\, \forall x\, A(x, y)$ влечёт $\forall x\, \exists y\, A(x, y)$
 
 ::: {.definition ref="def:lec02:vacuous"}
 Пустая истина — $\forall x\, (A(x) \to B(x))$, истинное потому, что $A(x)$ ложно для всех $x$.
+:::
+
+# Лекция 3 — Строки: индуктивные определения, индукция и рекурсия
+
+::: {.definition ref="def:lec03:string"}
+$S(A)$: $[\,] \in S(A)$; если $s \in S(A)$, $x \in A$, то $x : s \in S(A)$ ($x$ — голова, $s$ — хвост); других строк нет. $[x_1, \dots, x_n] := x_1 : (x_2 : (\dots : (x_n : [\,]) \dots))$.
+:::
+
+::: {.axiom ref="ax:lec03:a1a2"}
+(A1) $[\,] \ne x : s$; (A2) $x : s = y : t \iff x = y \wedge s = t$.
+:::
+
+::: {.axiom ref="ax:lec03:induction"}
+(ПИ) $P([\,]) \wedge \forall s\, \forall x\, (P(s) \to P(x : s)) \to \forall s\, P(s)$; база, переход (шаг), предположение индукции. Из (A1), (A2) не выводится.
+:::
+
+::: {.proposition ref="prop:lec03:cons-neq" status="доказано в лекции 3"}
+$y : s \ne s$ для всех $s$, $y$. *Идея:* индукция по $s$ с предикатом $\forall y\, (y : s \ne s)$; в переходе (A2) сводит к предположению индукции при $y := x$.
+:::
+
+::: {.definition ref="def:lec03:lh"}
+$\mathrm{lh}([\,]) = 0$, $\mathrm{lh}(x : s) = 1 + \mathrm{lh}(s)$ (в листках $\mathrm{len}$).
+:::
+
+::: {.definition ref="def:lec03:app"}
+$\mathrm{app}([\,], t) = t$, $\mathrm{app}(x : s, t) = x : \mathrm{app}(s, t)$ — рекурсия по первому аргументу.
+:::
+
+::: {.lemma ref="lem:lec03:app-nil" status="доказано в лекции 3"}
+$\mathrm{app}(s, [\,]) = s$. *Идея:* индукция по $s$.
+:::
+
+::: {.lemma ref="lem:lec03:app-assoc" status="доказано в лекции 3"}
+$\mathrm{app}(s, \mathrm{app}(t, r)) = \mathrm{app}(\mathrm{app}(s, t), r)$. *Идея:* индукция по $s$ — аргументу рекурсии; индукция по $t$ или $r$ застревает.
+:::
+
+::: {.proposition ref="prop:lec03:lh-app" status="доказано в лекции 3"}
+$\mathrm{lh}(\mathrm{app}(s, t)) = \mathrm{lh}(s) + \mathrm{lh}(t)$. *Идея:* индукция по $s$.
+:::
+
+::: {.lemma ref="lem:lec03:cancel-left" status="доказано в лекции 3"}
+$\mathrm{app}(s, t) = \mathrm{app}(s, r) \Rightarrow t = r$. *Идея:* индукция по $s$, в переходе (A2).
+:::
+
+::: {.lemma ref="lem:lec03:app-empty" status="доказано в лекции 3"}
+$\mathrm{app}(s, t) = [\,] \Rightarrow s = t = [\,]$. *Идея:* разбор случаев $s = [\,]$ / $s = x : r$, второй противоречит (A1).
+:::
+
+::: {.definition ref="def:lec03:rev"}
+$\mathrm{rev}([\,]) = [\,]$, $\mathrm{rev}(x : s) = \mathrm{app}(\mathrm{rev}(s), [x])$.
+:::
+
+::: {.proposition ref="prop:lec03:rev-app" status="доказано в лекции 3"}
+$\mathrm{rev}(\mathrm{app}(s, t)) = \mathrm{app}(\mathrm{rev}(t), \mathrm{rev}(s))$. *Идея:* индукция по $s$; база — правая единица, переход — ассоциативность.
+:::
+
+::: {.corollary ref="cor:lec03:rev-rev" status="доказано в лекции 3"}
+$\mathrm{rev}(\mathrm{rev}(s)) = s$. *Идея:* индукция по $s$ с переворотом конкатенации и $\mathrm{rev}([x]) = [x]$. Отсюда сокращение справа без индукции.
+:::
+
+# Лекция 4 — Множества
+
+::: {.axiom ref="ax:lec04:foundation"}
+Нет бесконечных цепочек $x_0 \ni x_1 \ni x_2 \ni \dots$
+:::
+
+::: {.proposition ref="prop:lec04:not-self" status="доказано в лекции 4"}
+$a \notin a$ для любого $a$; отсюда $a \ne \{a\}$. *Идея:* иначе цепочка $a \ni a \ni \dots$
+:::
+
+::: {.definition ref="def:lec04:equal"}
+$A = B \iff \forall x\, (x \in A \iff x \in B)$.
+:::
+
+::: {.axiom ref="ax:lec04:equality"}
+$A = B \wedge B \in C \Rightarrow A \in C$; равные множества взаимозаменяемы.
+:::
+
+::: {.definition ref="def:lec04:subset"}
+$A \subseteq B \iff \forall x\, (x \in A \Rightarrow x \in B)$; собственное подмножество — $A \subseteq B$, $A \ne B$.
+:::
+
+::: {.lemma ref="lem:lec04:subset" status="доказано в лекции 4"}
+$A \subseteq A$; $A \subseteq B \subseteq C \Rightarrow A \subseteq C$; $A = B \iff A \subseteq B \wedge B \subseteq A$. *Идея:* произвольный элемент.
+:::
+
+::: {.axiom ref="ax:lec04:listing"}
+Существует $\{a_1, \dots, a_n\}$: $x \in \{a_1, \dots, a_n\} \iff x = a_1 \vee \ldots \vee x = a_n$; синглетон $\{a\}$.
+:::
+
+::: {.axiom ref="ax:lec04:specification"}
+Существует $\{x \in A \mid \varphi(x)\}$: $y \in \{x \in A \mid \varphi(x)\} \iff y \in A \wedge \varphi(y)$.
+:::
+
+::: {.definition ref="def:lec04:empty"}
+$E$ пусто, если $\forall x\, (x \notin E)$; $\varnothing = \{x \in \N \mid x \ne x\}$.
+:::
+
+::: {.lemma ref="lem:lec04:empty" status="доказано в лекции 4"}
+Пустое множество — подмножество любого; любые два пустых множества равны, так что $\varnothing$ единственно. *Идея:* пустая истина.
+:::
+
+::: {.definition ref="def:lec04:bounded"}
+$\forall x \in A\ \varphi \equiv \forall x\, (x \in A \to \varphi)$, $\exists x \in A\ \varphi \equiv \exists x\, (x \in A \wedge \varphi)$.
+:::
+
+::: {.proposition ref="prop:lec04:bounded-neg" status="доказано в лекции 4"}
+$\neg\forall x \in A\ \varphi \equiv \exists x \in A\ \neg\varphi$, $\neg\exists x \in A\ \varphi \equiv \forall x \in A\ \neg\varphi$. *Идея:* отрицание кванторов и $\neg(P \to Q) \equiv P \wedge \neg Q$.
+:::
+
+::: {.lemma ref="lem:lec04:russell" status="доказано в лекции 4"}
+Нет $R$ с $\forall x\, (x \in R \iff x \notin x)$. *Идея:* подставить $x := R$.
+:::
+
+::: {.corollary ref="cor:lec04:no-universal" status="доказано в лекции 4"}
+$\{x \in A \mid x \notin x\} \notin A$; множества всех множеств нет. *Идея:* рассуждение Рассела внутри $A$.
+:::
+
+::: {.axiom ref="ax:lec04:powerset"}
+Существует $\mathcal{P}(A)$: $x \in \mathcal{P}(A) \iff x \subseteq A$.
+:::
+
+::: {.axiom ref="ax:lec04:union"}
+Существует $\bigcup A$: $x \in \bigcup A \iff \exists \alpha\, (x \in \alpha \wedge \alpha \in A)$.
+:::
+
+::: {.definition ref="def:lec04:operations"}
+$A \cup B = \bigcup\{A, B\}$, $A \cap B = \{x \in A \mid x \in B\}$, $A \setminus B = \{x \in A \mid x \notin B\}$; непересекающиеся — $A \cap B = \varnothing$.
+:::
+
+::: {.lemma ref="lem:lec04:subset-equiv" status="доказано в лекции 4"}
+$A \subseteq B \iff A \cap B = A \iff A \cup B = B$. *Идея:* доказательство по кругу.
+:::
+
+::: {.definition ref="def:lec04:complement"}
+$\bar A = U \setminus A$ для $A \subseteq U$; $A \setminus B = A \cap \bar B$.
+:::
+
+::: {.theorem ref="thm:lec04:identities" status="доказано в лекции 4"}
+Коммутативность, ассоциативность, идемпотентность, поглощение, $\bar{\bar A} = A$, две дистрибутивности, законы де Моргана, свойства $\varnothing$ и $U$, $A \cap \bar A = \varnothing$, $A \cup \bar A = U$. *Идея:* поэлементный перевод в логические эквивалентности; на практике — таблица принадлежности из $2^k$ строк.
+:::
+
+::: {.definition ref="def:lec04:pair"}
+$(a, b) = \{\{a\}, \{a, b\}\}$ (по Куратовскому); $(a, a) = \{\{a\}\}$.
+:::
+
+::: {.lemma ref="lem:lec04:pair" status="доказано в лекции 4"}
+$(a, b) = (c, d) \iff a = c \wedge b = d$. *Идея:* из $\{a\} \in (c, d)$ получить $a = c$, затем разобрать $\{a, b\} = \{c\}$ и $\{a, b\} = \{c, d\}$.
+:::
+
+::: {.definition ref="def:lec04:product"}
+$A \times B = \{z \in \mathcal{P}(\mathcal{P}(A \cup B)) \mid \exists a \in A\ \exists b \in B\ z = (a, b)\}$; $A_1 \times \ldots \times A_n$ — скобки слева.
+:::
+
+::: {.definition ref="def:lec04:power"}
+$A^0 = \{\varnothing\}$, $A^1 = A$, $A^n = A \times \ldots \times A$ при $n \ge 2$; $A^{n+1} = A^n \times A$ только при $n \ge 1$.
+:::
+
+::: {.definition ref="def:lec04:tuple"}
+$(a_1, \dots, a_n) = ((\dots(a_1, a_2), \dots), a_n)$ при $n \ge 2$.
+:::
+
+::: {.lemma ref="lem:lec04:tuple" status="доказано в лекции 4"}
+$(a_1, \dots, a_n) = (b_1, \dots, b_n) \iff \forall i\ a_i = b_i$. *Идея:* критерий равенства пар $n - 1$ раз.
 :::
 
 # Глоссарий курса
