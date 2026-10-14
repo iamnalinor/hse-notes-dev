@@ -20,6 +20,11 @@ from pathlib import Path
 
 import pypandoc
 
+try:
+    from fontTools.ttLib import TTFont
+except ImportError:  # pragma: no cover
+    TTFont = None
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build  # noqa: E402
 
@@ -63,6 +68,23 @@ FORBIDDEN_MATH = [
 TEXT_CMDS = re.compile(
     r"\\(?:text|textbf|textit|mbox|textrm|textsf|texttt|operatorname)\s*\{(?:[^{}]|\{[^{}]*\})*\}"
 )
+
+
+FONT_DIR = Path.home() / ".TinyTeX" / "texmf-dist" / "fonts" / "opentype" / "public" / "cm-unicode"
+
+
+def text_glyphs() -> set[int] | None:
+    """Символы, которые есть во всех начертаниях основного шрифта (CMU Serif); None — шрифт не найден."""
+    if TTFont is None or not (FONT_DIR / "cmunrm.otf").exists():
+        return None
+    common: set[int] | None = None
+    for name in ("cmunrm", "cmunti", "cmunbx"):
+        cmap = set(TTFont(FONT_DIR / f"{name}.otf").getBestCmap())
+        common = cmap if common is None else common & cmap
+    return common
+
+
+GLYPHS = text_glyphs()
 
 
 @dataclass
@@ -327,6 +349,15 @@ def lint_notes(path: Path, rel: str, cfg: dict, labels: dict, rep: Report) -> No
             rep.err(rel, f"служебное слово «{mm.group(0)}» в тексте: конспект не знает о пайплайне")
         for mm in SOFT_WORDS.finditer(no_math):
             rep.warn(rel, f"«{mm.group(0)}» — нужна хотя бы фраза, почему")
+        if GLYPHS is not None:
+            missing = sorted(
+                {ch for ch in no_math if ord(ch) > 127 and ord(ch) not in GLYPHS and ch != "\u00a0"}
+            )
+            if missing:
+                rep.err(
+                    rel,
+                    f"символов {''.join(missing)} нет в шрифте PDF (будут квадраты): пиши их в формуле, например $\\Rightarrow$",
+                )
         if "!" in no_math:
             rep.warn(
                 rel,

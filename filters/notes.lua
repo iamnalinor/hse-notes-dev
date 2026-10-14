@@ -468,7 +468,9 @@ local function render_proof_like(div, name)
   if title and title ~= '' then label = name .. ' ' .. title end
   if FORMAT_LATEX then
     local content = pandoc.Blocks {}
-    content:insert(pandoc.RawBlock('latex', '\\begin{nbproof}{' .. inlines_to('latex', md_inlines_resolved(label)) .. '}'))
+    -- в необязательном аргументе proof гиперссылка ломается (babel): оставляем только текст
+    local plain = md_inlines_resolved(label):walk { Link = function(l) return l.content end }
+    content:insert(pandoc.RawBlock('latex', '\\begin{nbproof}{' .. inlines_to('latex', plain) .. '}'))
     content:extend(div.content)
     content:insert(pandoc.RawBlock('latex', '\\end{nbproof}'))
     return pandoc.Div(content)

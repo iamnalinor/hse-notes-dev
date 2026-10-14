@@ -61,7 +61,11 @@ def test_index_single_counter(demo: Path):
     assert labels["fig:lec01:mult"]["number"] == "1.1"
     assert labels["def:lec02:elem"]["number"] == "2.1"
     assert labels["def:lec02:elem"]["basis"] == "forecast"
-    assert {g["term"] for g in idx["glossary"]["algebra"]} == {"Матрица", "[A]_{ij}", "Элементарное преобразование"}
+    assert {g["term"] for g in idx["glossary"]["algebra"]} == {
+        "Матрица",
+        "[A]_{ij}",
+        "Элементарное преобразование",
+    }
 
 
 @pytest.mark.skipif(not HAS_TEX, reason="нужен TeX для TikZ → SVG")
@@ -183,6 +187,17 @@ def test_lint_catches(demo: Path, old: str, new: str, expected: str):
     res = lint(demo)
     assert res.returncode != 0
     assert expected in res.stdout, res.stdout
+
+
+@pytest.mark.skipif(not HAS_TEX, reason="нужен шрифт CMU из TeX Live")
+def test_lint_missing_glyph(demo: Path):
+    p = demo / "notes" / "algebra" / "01_sep03_matrices.md"
+    p.write_text(
+        p.read_text(encoding="utf-8").replace("Первая лекция курса", "Итак ⇒ первая лекция курса", 1),
+        encoding="utf-8",
+    )
+    res = lint(demo)
+    assert "нет в шрифте PDF" in res.stdout, res.stdout
 
 
 def test_lint_weekday(demo: Path):
