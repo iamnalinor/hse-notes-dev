@@ -155,6 +155,8 @@ def check_math(rep: Report, rel: str, tex: str) -> None:
     for rx, msg in FORBIDDEN_MATH:
         if rx.search(tex):
             rep.err(rel, f"{msg}: ${tex[:60]}$")
+    if re.search(r"\[-?@[a-z]+:lec", tex) or re.search(r"(?<![\\\w])@[a-z]+:lec\d", tex):
+        rep.err(rel, f"ссылка @метка внутри формулы не разрешается — вынеси её за $…$: ${tex[:60]}$")
     stripped = TEXT_CMDS.sub("", tex)
     bad = sorted({ch for ch in stripped if ord(ch) > 127})
     if bad:
