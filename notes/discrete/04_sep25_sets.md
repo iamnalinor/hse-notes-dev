@@ -27,9 +27,9 @@ based_on: конспект лектора (гл. 4), конспекты лекц
 
 Пусть $\varphi(x)$ — предикат с предметной областью $D$, например «$x$ чётно» на $\N$. Естественно собрать все $x$ из $D$, удовлетворяющие $\varphi$, в один новый объект — «все чётные натуральные числа». Такая «часть» области $D$, вырезанная свойством $\varphi$, состоит из многих объектов, но рассматривается как единое целое. Это пример того, что в математике называют *множеством*.
 
-Интуитивно множество — это совокупность (собрание) объектов произвольной природы. Это не определение: «совокупность» и «объект» сами не определены. Назначение понятия множества — стать универсальным объектом математики, обобщающим числа, функции, геометрические фигуры и многое другое, поэтому определить его через что-то более простое не удаётся. Вместо определения поступают так же, как со строками в лекции 3: не говорят, что такое множество, а постулируют правила, по которым множества «себя ведут». Слово «множество» — просто имя фигуры в игре, и его смысл исчерпывается правилами игры (как шахматный слон остаётся тем же, назови его хоть офицером). Это и есть *аксиоматический метод*.
+Интуитивно множество — совокупность объектов произвольной природы, но это не определение: «совокупность» и «объект» сами не определены. Множество призвано стать универсальным объектом математики (числа, функции, фигуры — всё множества), поэтому определить его через что-то более простое не удаётся. Как со строками в лекции 3, вместо определения постулируют правила, по которым множества «себя ведут»: слово «множество» — имя фигуры в игре, и его смысл исчерпывается правилами (шахматный слон остаётся тем же, назови его хоть офицером). Это и есть *аксиоматический метод*.
 
-Основное, неопределяемое отношение — *принадлежность*: множество $A$ может быть *элементом* множества $B$; говорят, что $A$ *принадлежит* $B$, и пишут $A \in B$. Отрицание: $A \notin B$. В нашей модели *всё есть множество*: элементы множеств — тоже множества, у них свои элементы и так далее. Интуиция «элемент — отдельный предмет, множество — коллекция предметов» здесь плохо работает: разницы между «предметами» и «коллекциями» нет. Модель абстрактна и вправе вести себя непривычно.
+Основное, неопределяемое отношение — *принадлежность*: множество $A$ может быть *элементом* множества $B$ ($A$ *принадлежит* $B$, $A \in B$; отрицание $A \notin B$). В модели *всё есть множество*: элементы множеств — тоже множества, и интуиция «предмет — коллекция предметов» здесь работает плохо.
 
 ::: {.axiom #ax:lec04:foundation title="нет бесконечных убывающих цепочек"}
 Не существует бесконечной последовательности множеств $x_0, x_1, x_2, \dots$ такой, что $x_0 \ni x_1 \ni x_2 \ni \dots \ni x_n \ni x_{n+1} \ni \dots$ (то есть $x_{n+1} \in x_n$ при всех $n$).
@@ -103,7 +103,7 @@ $$A \subseteq B \iff \forall x\, (x \in A \Longrightarrow x \in B).$$
 
 ## Как получать новые множества {#sec:lec04:constructions}
 
-Существуют ли множества вообще? Если бы их не было, модель была бы бессмысленной. Формальных оснований мы искать не будем и примем, что существуют известные множества $\N = \{0, 1, 2, \dots\}$ (в курсе $0 \in \N$, замечание [-@rem:lec01:nat]), $\Z$, $\Q$ и $\R$. Их элементы — тоже множества, но внутреннее устройство чисел (например, верно ли $1 \in 2$) мы не используем, а пользуемся только привычными свойствами: $1 \ne 2$, $2 < 3$, $2 + 3 = 5$. Главная задача модели — дать (по возможности) безопасные способы строить из имеющихся множеств новые; «безопасные» означает «не ведущие к противоречию», почему это важно — ниже, в разделе [-@sec:lec04:russell].
+Чтобы модель не была пустой, примем, что существуют $\N = \{0, 1, 2, \dots\}$ (в курсе $0 \in \N$, замечание [-@rem:lec01:nat]), $\Z$, $\Q$ и $\R$. Их элементы — тоже множества, но внутреннее устройство чисел (верно ли $1 \in 2$?) не используется — только привычные свойства: $1 \ne 2$, $2 < 3$, $2 + 3 = 5$. Дальше нужны безопасные, то есть не ведущие к противоречию, способы строить новые множества; почему это важно — в разделе [-@sec:lec04:russell].
 
 ::: {.axiom #ax:lec04:listing title="«из многих — одно»: перечисление"}
 Для любых множеств $a_1, \dots, a_n$ существует множество $\{a_1, \dots, a_n\}$ такое, что для каждого $x$
@@ -160,7 +160,7 @@ $\varnothing$ — единственное пустое множество. В �
 :::
 
 ::: {.remark #rem:lec04:empty-table tag="подводный камень"}
-$\varnothing$ — «пустая коробка», $\{\varnothing\}$ — «коробка, в которой лежит пустая коробка»: у первого нет элементов, у второго ровно один. Легко перепутать $\in$ и $\subseteq$, когда множества вложены друг в друга. Таблица для четырёх множеств, построенных из $\varnothing$; в клетке строки $X$ и столбца $Y$ указано, верно ли $X \in Y$ и $X \subseteq Y$:
+$\varnothing$ — «пустая коробка», $\{\varnothing\}$ — «коробка, в которой лежит пустая коробка»: у первого нет элементов, у второго ровно один. Легко перепутать $\in$ и $\subseteq$, когда множества вложены друг в друга. Таблица для множеств, построенных из $\varnothing$ (в строках три множества, в столбцах четыре); в клетке строки $X$ и столбца $Y$ указано, верно ли $X \in Y$ и $X \subseteq Y$:
 
 | $X$ \\ $Y$ | $\varnothing$ | $\{\varnothing\}$ | $\{\{\varnothing\}\}$ | $\{\varnothing, \{\varnothing\}\}$ |
 |:-:|:-:|:-:|:-:|:-:|
@@ -190,10 +190,7 @@ $$\neg\forall x \in A\ \varphi \equiv \exists x \in A\ \neg\varphi, \qquad \neg\
 :::
 
 ::: proof
-По определению [-@def:lec04:bounded], утверждению [-@prop:lec02:quant-neg] и утверждению [-@prop:lec01:laws]:
-$$\neg\forall x\, (x \in A \to \varphi) \equiv \exists x\, \neg(x \in A \to \varphi) \equiv \exists x\, (x \in A \wedge \neg\varphi),$$
-$$\neg\exists x\, (x \in A \wedge \varphi) \equiv \forall x\, \neg(x \in A \wedge \varphi) \equiv \forall x\, (x \notin A \vee \neg\varphi) \equiv \forall x\, (x \in A \to \neg\varphi).$$
-В первой строке использовано $\neg(P \to Q) \equiv P \wedge \neg Q$, во второй — закон де Моргана и $P \to Q \equiv \neg P \vee Q$.
+Переводим по определению [-@def:lec04:bounded] в обычные кванторы, проносим отрицание сквозь квантор (утверждение [-@prop:lec02:quant-neg]) и применяем $\neg(P \to Q) \equiv P \wedge \neg Q$, а для второго — закон де Моргана и $\neg P \vee Q \equiv P \to Q$ (утверждение [-@prop:lec01:laws]): $\neg\forall x\, (x \in A \to \varphi) \equiv \exists x\, (x \in A \wedge \neg\varphi)$, $\neg\exists x\, (x \in A \wedge \varphi) \equiv \forall x\, (x \notin A \vee \neg\varphi) \equiv \forall x\, (x \in A \to \neg\varphi)$.
 :::
 
 Пример: отрицание «$\forall x \in \Z\ \exists y \in \Z\ (y > x)$» — «$\exists x \in \Z\ \forall y \in \Z\ (y \le x)$»: отрицание проходит сквозь ограниченные кванторы, меняя их на двойственные, а ограничения $x \in \Z$, $y \in \Z$ остаются на месте.
@@ -204,7 +201,7 @@ $$\neg\exists x\, (x \in A \wedge \varphi) \equiv \forall x\, \neg(x \in A \wedg
 
 ## Парадокс Рассела {#sec:lec04:russell}
 
-Выделять можно только подмножества *заданного* множества $A$. А нельзя ли собрать вообще *все* множества $x$ со свойством $\varphi$, не ограничиваясь каким-то $A$? Исторически именно так и понимали множество: любая совокупность объектов, обладающих общим свойством. Оказывается, такая интуиция логически противоречива.
+Выделять можно только подмножества *заданного* множества $A$. А нельзя ли собрать *все* множества со свойством $\varphi$, как и понимали множество исторически? Оказывается, такая интуиция противоречива.
 
 ::: {.lemma #lem:lec04:russell title="парадокс Рассела"}
 Не существует множества $R$ такого, что $\forall x\, (x \in R \iff x \notin x)$.
@@ -216,7 +213,7 @@ $$\neg\exists x\, (x \in A \wedge \varphi) \equiv \forall x\, \neg(x \in A \wedg
 Пусть такое $R$ существует. Подставив $x := R$, получаем $R \in R \iff R \notin R$. Если $R \notin R$, то по этой равносильности $R \in R$ — противоречие; значит, $R \in R$. Но тогда по той же равносильности $R \notin R$ — снова противоречие. Итак, предположение о существовании $R$ ведёт к противоречию, и такого $R$ нет.
 :::
 
-Так что «множества всех множеств, не являющихся своими элементами» $\{x \mid x \notin x\}$ не существует, хотя условие $x \notin x$ выглядит вполне безобидно. Это и казалось парадоксальным. Бытовой вариант — деревенский брадобрей, который бреет ровно тех жителей деревни, кто не бреется сам: бреет ли он себя? Ответ тот же — такого брадобрея не бывает.
+Так что множества $\{x \mid x \notin x\}$ не существует, хотя условие $x \notin x$ выглядит безобидно (бытовой вариант — брадобрей, который бреет ровно тех, кто не бреется сам: такого брадобрея не бывает).
 
 ::: {.corollary #cor:lec04:no-universal title="нет множества всех множеств"}
 1. Для любого множества $A$ множество $R_A = \{x \in A \mid x \notin x\}$ не является элементом $A$.
@@ -229,7 +226,7 @@ $$\neg\exists x\, (x \in A \wedge \varphi) \equiv \forall x\, \neg(x \in A \wedg
 *Пункт 2.* Если бы $V$ существовало, то по пункту 1 $R_V \notin V$, а это противоречит $\forall x\, (x \in V)$.
 :::
 
-Доказательство не использует аксиому [-@ax:lec04:foundation]. С ней пункт 2 проще: каждое множество удовлетворяет $x \notin x$ (утверждение [-@prop:lec04:not-self]), так что $V$ совпало бы с запрещённым $R$. Мораль: выделение «изнутри» заданного множества безопасно — оно не может построить $R$, потому что $R_A$ всегда оказывается вне $A$. Поэтому в аксиоме [-@ax:lec04:specification] обязательно стоит «$x \in A$».
+Аксиома [-@ax:lec04:foundation] здесь не нужна (с ней пункт 2 проще: все множества удовлетворяют $x \notin x$, и $V$ совпало бы с запрещённым $R$). Мораль: выделение «изнутри» заданного множества безопасно, потому что $R_A$ всегда оказывается вне $A$; поэтому в аксиоме [-@ax:lec04:specification] обязательно стоит «$x \in A$».
 
 ## Множество подмножеств {#sec:lec04:powerset}
 
@@ -247,7 +244,7 @@ $\mathcal{P}(\varnothing) = \{\varnothing\}$, $\mathcal{P}(\{1\}) = \{\varnothin
 :::
 
 ```{.tikz #fig:lec04:powerset caption="Подмножества $X \subseteq \\{1, 2\\}$: на каждом уровне решаем, входит ли очередной элемент в $X$; четыре листа — четыре элемента $\mathcal{P}(\\{1, 2\\})$"}
-\begin{tikzpicture}[level distance=1.3cm, level 1/.style={sibling distance=4.2cm}, level 2/.style={sibling distance=2.1cm}, every node/.style={font=\small}, edge from parent/.style={draw, thick}, lf/.style={draw, rounded corners, fill=nbblue!12, minimum width=1.3cm}]
+\begin{tikzpicture}[level distance=1.1cm, level 1/.style={sibling distance=4.2cm}, level 2/.style={sibling distance=2.1cm}, every node/.style={font=\small}, edge from parent/.style={draw, thick}, lf/.style={draw, rounded corners, fill=nbblue!12, minimum width=1.3cm}]
   \node {$X \subseteq \{1, 2\}$}
     child { node {$1 \in X$}
       child { node[lf] {$\{1, 2\}$} edge from parent node[left, nbgreen] {$2 \in X$} }
@@ -259,7 +256,7 @@ $\mathcal{P}(\varnothing) = \{\varnothing\}$, $\mathcal{P}(\{1\}) = \{\varnothin
 ```
 
 ::: {.remark #rem:lec04:powerset-corner tag="корнер-кейс"}
-$\mathcal{P}(\varnothing) = \{\varnothing\} \ne \varnothing$: у пустого множества есть ровно одно подмножество — оно само. Дальше: $\mathcal{P}(\mathcal{P}(\varnothing)) = \mathcal{P}(\{\varnothing\}) = \{\varnothing, \{\varnothing\}\}$. Так из «ничего» строятся всё новые множества. И ещё одна частая путаница: $A \in \mathcal{P}(A)$ всегда, а $A \subseteq \mathcal{P}(A)$, вообще говоря, нет. Пусть $A = \{\{\varnothing\}\}$; тогда $\mathcal{P}(A) = \{\varnothing, \{\{\varnothing\}\}\}$, и единственный элемент $\{\varnothing\}$ множества $A$ не лежит в $\mathcal{P}(A)$: он не пуст и не равен $\{\{\varnothing\}\}$, так как $\varnothing \ne \{\varnothing\}$.
+$\mathcal{P}(\varnothing) = \{\varnothing\} \ne \varnothing$: у пустого множества есть ровно одно подмножество — оно само. Дальше: $\mathcal{P}(\mathcal{P}(\varnothing)) = \mathcal{P}(\{\varnothing\}) = \{\varnothing, \{\varnothing\}\}$. И ещё одна частая путаница: $A \in \mathcal{P}(A)$ всегда, а $A \subseteq \mathcal{P}(A)$, вообще говоря, нет. Пусть $A = \{\{\varnothing\}\}$; тогда $\mathcal{P}(A) = \{\varnothing, \{\{\varnothing\}\}\}$, и единственный элемент $\{\varnothing\}$ множества $A$ не лежит в $\mathcal{P}(A)$: он не пуст и не равен $\{\{\varnothing\}\}$, так как $\varnothing \ne \{\varnothing\}$.
 :::
 
 ::: {.example #ex:lec04:p-inj}
@@ -280,14 +277,8 @@ $\bigcup A$ — множество элементов элементов $A$: э
 ::: {.example #ex:lec04:union}
 1. $\bigcup \varnothing = \varnothing$: если $x \in \bigcup \varnothing$, то $x \in \alpha \in \varnothing$ для некоторого $\alpha$, но $\alpha \in \varnothing$ невозможно. Значит, $\bigcup \varnothing$ пусто и по следствию [-@cor:lec04:empty-unique] равно $\varnothing$.
 2. $\bigcup \{A\} = A$: $x \in \bigcup\{A\} \iff \exists \alpha\, (x \in \alpha \wedge \alpha = A) \iff x \in A$ (в последнем переходе свидетель $\alpha = A$).
-3. Для $A = \{\{1, 2, 3\}, \{1\}, \{2, 4\}\}$ получаем $\bigcup A = \{1, 2, 3, 4\}$:
-$$\begin{aligned}
-x \in \bigcup A &\iff \exists \alpha\, \bigl(x \in \alpha \wedge (\alpha = \{1, 2, 3\} \vee \alpha = \{1\} \vee \alpha = \{2, 4\})\bigr)\\
-&\iff \exists \alpha\, (x \in \alpha \wedge \alpha = \{1, 2, 3\}) \vee \exists \alpha\, (x \in \alpha \wedge \alpha = \{1\})\\
-&\qquad \vee \exists \alpha\, (x \in \alpha \wedge \alpha = \{2, 4\})\\
-&\iff x \in \{1, 2, 3\} \vee x \in \{1\} \vee x \in \{2, 4\} \iff x = 1 \vee x = 2 \vee x = 3 \vee x = 4.
-\end{aligned}$$
-Во втором переходе использованы дистрибутивность $P \wedge (Q \vee R) \equiv (P \wedge Q) \vee (P \wedge R)$ (обе части ложны при $[P] = 0$ и равны $[Q \vee R]$ при $[P] = 1$) и то, что $\exists$ переставляется с $\vee$ (замечание [-@rem:lec02:distribute]).
+3. Для $A = \{\{1, 2, 3\}, \{1\}, \{2, 4\}\}$ получаем $\bigcup A = \{1, 2, 3, 4\}$. Условие $\alpha \in A$ — дизъюнкция $\alpha = \{1, 2, 3\} \vee \alpha = \{1\} \vee \alpha = \{2, 4\}$. Внеся $x \in \alpha \wedge {}$ в каждый член по дистрибутивности $P \wedge (Q \vee R) \equiv (P \wedge Q) \vee (P \wedge R)$ (обе части ложны при $[P] = 0$ и равны $[Q \vee R]$ при $[P] = 1$) и переставив $\exists$ с $\vee$ (замечание [-@rem:lec02:distribute]), получаем
+$$x \in \bigcup A \iff x \in \{1, 2, 3\} \vee x \in \{1\} \vee x \in \{2, 4\} \iff x = 1 \vee x = 2 \vee x = 3 \vee x = 4.$$
 :::
 
 ::: {.example #ex:lec04:segments}
@@ -334,6 +325,7 @@ x \in \bigcup A &\iff \exists \alpha\, \bigl(x \in \alpha \wedge (\alpha = \{1, 
 Из определений: для каждого $x$
 $$x \in A \cup B \iff x \in A \vee x \in B, \quad x \in A \cap B \iff x \in A \wedge x \in B, \quad x \in A \setminus B \iff x \in A \wedge x \notin B.$$
 Два последних — прямо аксиома выделения, первое получается так же, как в примере [-@ex:lec04:union] (пункт 3): $x \in \bigcup\{A, B\} \iff \exists \alpha\, (x \in \alpha \wedge (\alpha = A \vee \alpha = B)) \iff x \in A \vee x \in B$.
+
 Операции над множествами — это связки над утверждениями о принадлежности: $\cup$ — это $\vee$, $\cap$ — это $\wedge$, $\setminus$ — это «и не».
 
 ::: {.lemma #lem:lec04:basic-incl title="простейшие включения"}
@@ -423,7 +415,7 @@ $$x \in A \cup B \iff x \in A \vee x \in B, \quad x \in A \cap B \iff x \in A \w
 $$x \in \overline{A \cap B} \iff \neg(x \in A \wedge x \in B) \iff x \notin A \vee x \notin B \iff x \in \bar A \cup \bar B$$
 по закону де Моргана для связок (утверждение [-@prop:lec01:laws]). Так же пункты 1, 2, 5, 7 следуют из коммутативности, ассоциативности, снятия двойного отрицания и законов де Моргана в утверждении [-@prop:lec01:laws]. Пункты 8, 9 — из того, что конъюнкция с ложным высказыванием ложна, дизъюнкция с истинным истинна, $\alpha \wedge \neg\alpha$ всегда ложно, а $\alpha \vee \neg\alpha$ всегда истинно.
 
-Оставшиеся эквивалентности $\alpha \wedge \alpha \equiv \alpha$, $\alpha \wedge (\alpha \vee \beta) \equiv \alpha$, $\alpha \wedge (\beta \vee \gamma) \equiv (\alpha \wedge \beta) \vee (\alpha \wedge \gamma)$ и двойственные к ним проверим через утверждение [-@prop:lec01:arith]: значение $\wedge$ — минимум, $\vee$ — максимум значений; ниже буквами $\alpha$, $\beta$, $\gamma$ обозначены сами значения $0$ или $1$. Например, для дистрибутивности $\min(\alpha, \max(\beta, \gamma)) = \max(\min(\alpha, \beta), \min(\alpha, \gamma))$: при $\alpha = 0$ обе части равны $0$, при $\alpha = 1$ обе равны $\max(\beta, \gamma)$. Для второй дистрибутивности при $\alpha = 1$ обе части равны $1$, при $\alpha = 0$ — $\min(\beta, \gamma)$. Поглощение $\min(\alpha, \max(\alpha, \beta)) = \alpha$: при $\alpha = 0$ левая часть равна $\min(0, \cdot) = 0$, при $\alpha = 1$ — $\min(1, 1) = 1$; двойственное $\max(\alpha, \min(\alpha, \beta)) = \alpha$ — так же. Идемпотентность: $\min(\alpha, \alpha) = \max(\alpha, \alpha) = \alpha$.
+Оставшиеся эквивалентности $\alpha \wedge \alpha \equiv \alpha$, $\alpha \wedge (\alpha \vee \beta) \equiv \alpha$, $\alpha \wedge (\beta \vee \gamma) \equiv (\alpha \wedge \beta) \vee (\alpha \wedge \gamma)$ и двойственные к ним проверим через утверждение [-@prop:lec01:arith]: значение $\wedge$ — минимум, $\vee$ — максимум значений; ниже буквами $\alpha$, $\beta$, $\gamma$ обозначены сами значения $0$ или $1$. Например, для дистрибутивности $\min(\alpha, \max(\beta, \gamma)) = \max(\min(\alpha, \beta), \min(\alpha, \gamma))$: при $\alpha = 0$ обе части равны $0$, при $\alpha = 1$ обе равны $\max(\beta, \gamma)$. Остальные проверяются так же перебором значения $\alpha$.
 :::
 
 ::: {.remark #rem:lec04:parens}
@@ -460,7 +452,7 @@ $$A \setminus (B \setminus C) = A \cap \overline{B \cap \bar C} = A \cap (\bar B
 :::
 
 ```{.tikz #fig:lec04:regions caption="Слева: восемь областей диаграммы трёх множеств, область подписана строкой $\alpha\beta\gamma$ принадлежности $A$, $B$, $C$. Справа: закрашено $A \setminus (B \setminus C)$ — области $100$, $101$, $111$"}
-\begin{tikzpicture}[set/.style={draw, thick}, rl/.style={font=\scriptsize}]
+\begin{tikzpicture}[scale=0.85, set/.style={draw, thick}, rl/.style={font=\scriptsize}]
   \def\A{(-0.5,0.3) circle (1)}
   \def\B{(0.5,0.3) circle (1)}
   \def\C{(0,-0.5) circle (1)}
@@ -482,7 +474,7 @@ $$A \setminus (B \setminus C) = A \cap \overline{B \cap \bar C} = A \cap (\bar B
 ```
 
 ::: {.remark #rem:lec04:minus tag="частое заблуждение"}
-«*$(A \cup B) \setminus B = A$: добавили $B$ и убрали $B$ — как $(a + b) - b = a$.*» Нет: при $A = B = \{1\}$ слева $\{1\} \setminus \{1\} = \varnothing$, а справа $\{1\}$. Объединение «склеивает» общие элементы: элементы $A \cap B$ при вычитании $B$ уходят вместе с $B$. Верно $(A \cup B) \setminus B = A \setminus B$, и это равно $A$ ровно тогда, когда $A \cap B = \varnothing$. Аналогия с числами подводит, потому что у объединения нет «обратной» операции: из $A \cup B = A \cup C$ не следует $B = C$ (например, $\{1\} \cup \{1\} = \{1\} \cup \varnothing$).
+«*$(A \cup B) \setminus B = A$: добавили $B$ и убрали $B$ — как $(a + b) - b = a$.*» Нет: при $A = B = \{1\}$ слева $\{1\} \setminus \{1\} = \varnothing$, а справа $\{1\}$. Объединение «склеивает» общие элементы: элементы $A \cap B$ при вычитании $B$ уходят вместе с $B$. Верно $(A \cup B) \setminus B = A \setminus B$, и это равно $A$ ровно тогда, когда $A \cap B = \varnothing$.
 :::
 
 Тождества и лемму [-@lem:lec04:subset-equiv] можно комбинировать.
@@ -491,8 +483,6 @@ $$A \setminus (B \setminus C) = A \cap \overline{B \cap \bar C} = A \cap (\bar B
 Если $A \subseteq C$ и $B \subseteq C$, то $A \cup B \subseteq C$.
 
 *Решение поэлементно.* Пусть $x \in A \cup B$. Если $x \in A$, то $x \in C$, так как $A \subseteq C$; если $x \in B$ — так как $B \subseteq C$.
-
-*Решение через тождества.* По лемме [-@lem:lec04:subset-equiv] $C = A \cup C$ и $C = B \cup C$. Подставим второе равенство в первое: $C = A \cup (B \cup C) = (A \cup B) \cup C$ (ассоциативность), и по той же лемме $A \cup B \subseteq C$.
 
 Итак, $A \cup B$ — наименьшее множество, содержащее и $A$, и $B$. Двойственное утверждение для пересечения — в самопроверке.
 :::
@@ -516,7 +506,7 @@ $$(a, b) := \{\{a\}, \{a, b\}\}.$$
 :::
 
 ::: proof
-*Идея:* сравнить элементы двух множеств $\{\{a\}, \{a, b\}\}$ и $\{\{c\}, \{c, d\}\}$, разобрав случаи; аккуратно следить за вырожденным случаем, когда двухэлементное «на вид» множество одноэлементно.
+*Идея:* сравнить элементы обеих частей, следя за вырожденным случаем, когда «двухэлементное» множество одноэлементно.
 
 «$\Leftarrow$»: равные множества взаимозаменяемы, поэтому из $(a, b) = (a, b)$, $a = c$, $b = d$ получаем $(a, b) = (c, d)$.
 
@@ -558,7 +548,7 @@ $$z \in A \times B \iff \exists a \in A\ \exists b \in B\ z = (a, b).$$
 ::: {.remark #rem:lec04:product-coord}
 Если $(x, y) \in A \times B$, то $x \in A$ и $y \in B$ (и обратно). Действительно, по определению $(x, y) = (a, b)$ для некоторых $a \in A$, $b \in B$, и по лемме [-@lem:lec04:pair] $x = a$, $y = b$.
 
-Это не мелочь, а следствие критерия равенства пар. Сравним с «суммой» числовых множеств $A + B := \{z \in \N \mid \exists a \in A\ \exists b \in B\ z = a + b\}$ для $A, B \subseteq \N$: здесь $2 + 3 \in \{1, 4, 0\} + \{5, 1\}$, так как $2 + 3 = 4 + 1$, хотя $2 \notin \{1, 4, 0\}$ и $3 \notin \{5, 1\}$. Сумма, в отличие от пары, не помнит слагаемых.
+Это следствие критерия равенства пар, а не мелочь: «сумма» $A + B := \{a + b \mid a \in A,\ b \in B\}$ числовых множеств этим свойством не обладает — $2 + 3 = 4 + 1 \in \{1, 4, 0\} + \{5, 1\}$, хотя $2 \notin \{1, 4, 0\}$ и $3 \notin \{5, 1\}$.
 :::
 
 ::: {.example #ex:lec04:product-empty}
@@ -566,7 +556,7 @@ $A \times \varnothing = \varnothing$ для любого $A$: если $z \in A 
 :::
 
 ::: {.example #ex:lec04:product-noncomm}
-$A \times B$ не обязано равняться $B \times A$. Для $A = \{x\}$, $B = \{y\}$ имеем $A \times B = \{(x, y)\}$ и $B \times A = \{(y, x)\}$. Возьмём $x = \varnothing$, $y = \{\varnothing\}$: так как $\varnothing \in y$, множество $y$ непусто и $y \ne x$. По следствию [-@cor:lec04:pair-swap] $(x, y) \ne (y, x)$, поэтому $A \times B \ne B \times A$.
+$A \times B$ не обязано равняться $B \times A$. Для $A = \{\varnothing\}$, $B = \{\{\varnothing\}\}$ имеем $A \times B = \{(\varnothing, \{\varnothing\})\}$ и $B \times A = \{(\{\varnothing\}, \varnothing)\}$, а $(\varnothing, \{\varnothing\}) \ne (\{\varnothing\}, \varnothing)$ по следствию [-@cor:lec04:pair-swap], так как $\varnothing \ne \{\varnothing\}$.
 :::
 
 Произведение и не ассоциативно: элементы $A \times (B \times C)$ — пары $(a, (b, c))$, а элементы $(A \times B) \times C$ — пары $((a, b), c)$, и, вообще говоря, это разные множества (совпадают они, например, когда один из множителей пуст: тогда обе части равны $\varnothing$). Тем не менее скобки в произведениях опускают, договорившись расставлять их слева направо:
@@ -581,7 +571,7 @@ $$A_1 \times A_2 \times A_3 \times \ldots \times A_n := (\dots((A_1 \times A_2) 
 :::
 
 ```{.tikz #fig:lec04:product caption="Произведения отрезков на плоскости: $A \times B$ и $C \times D$ закрашены; $(A \cup C) \times (B \cup D)$ содержит ещё два пунктирных квадрата, поэтому оно больше $(A \times B) \cup (C \times D)$"}
-\begin{tikzpicture}[x=1cm, y=1cm]
+\begin{tikzpicture}[x=0.85cm, y=0.8cm]
   \draw[-{Stealth}] (-0.3,0) -- (5.2,0) node[right] {$x$};
   \draw[-{Stealth}] (0,-0.3) -- (0,4.2) node[above] {$y$};
   \fill[nbblue!35] (1,1) rectangle (2,2);
@@ -651,7 +641,8 @@ $$x \in A_1 \times \ldots \times A_n \iff \exists a_1 \in A_1 \dots \exists a_n 
 и в частности $x \in A^n \iff \exists a_1 \in A \dots \exists a_n \in A\ x = (a_1, \dots, a_n)$.
 
 ::: {.remark #rem:lec04:tuples-strings title="кортежи и строки"}
-Кортежи и строки из лекции 3 — две модели одного и того же: конечных последовательностей. Строка $[a_1, \dots, a_n]$ строится справа налево приписыванием головы ($a_1 : (a_2 : \dots)$), кортеж — слева направо, вкладыванием в пары; критерий равенства кортежей играет роль аксиомы (A2) (аксиома [-@ax:lec03:a1a2]). Но здесь его не постулируют, а доказывают из определения пары. Дальше пары и произведения — основной строительный материал: бинарное отношение будет определено как подмножество $A \times B$, функция — как отношение особого вида, а равенство $|\mathcal{P}(A)| = 2^{|A|}$ (пример [-@ex:lec04:powerset]) докажем в лекциях о подсчёте.
+Кортежи и строки из лекции 3 — две модели одного и того же: конечных последовательностей. Строка строится справа налево ($a_1 : (a_2 : \dots)$), кортеж — слева направо, вкладыванием в пары; критерий равенства кортежей играет роль аксиомы (A2) (аксиома [-@ax:lec03:a1a2]), но доказывается из определения пары. Дальше пары и произведения — основной строительный материал: бинарное отношение будет подмножеством $A \times B$, функция — отношением особого вида.
+
 :::
 
 # Практика
@@ -681,7 +672,7 @@ b) Нет: верно только $\mathcal{P}(A) \cup \mathcal{P}(B) \subseteq
 ::: solution
 a) Для каждого $X$: $X \in \mathcal{P}(A \cap B) \iff X \subseteq A \cap B \iff X \subseteq A \wedge X \subseteq B \iff X \in \mathcal{P}(A) \cap \mathcal{P}(B)$. *Ключ:* средний переход — «$X \subseteq A \cap B$ тогда и только тогда, когда каждый элемент $X$ лежит и в $A$, и в $B$» ($\forall$ переставляется с $\wedge$, замечание [-@rem:lec02:distribute]).
 
-b) *Ключ:* для объединения переход не работает — $\forall$ не переставляется с $\vee$: «каждый элемент $X$ лежит в $A$ или в $B$» не означает «все в $A$ или все в $B$». При $A = \{1\}$, $B = \{2\}$ множество $\{1, 2\} \in \mathcal{P}(A \cup B)$, но $\{1, 2\} \notin \mathcal{P}(A) \cup \mathcal{P}(B) = \{\varnothing, \{1\}, \{2\}\}$. Включение $\mathcal{P}(A) \subseteq \mathcal{P}(A \cup B)$ верно, так как из $X \subseteq A$ и $A \subseteq A \cup B$ следует $X \subseteq A \cup B$ (лемма [-@lem:lec04:subset]); так же для $B$. Если $A \subseteq B$, то $A \cup B = B$ и $\mathcal{P}(A) \subseteq \mathcal{P}(B)$, поэтому обе части равны $\mathcal{P}(B)$. Обратно, если $\mathcal{P}(A \cup B) = \mathcal{P}(A) \cup \mathcal{P}(B)$, то $A \cup B \in \mathcal{P}(A)$ или $A \cup B \in \mathcal{P}(B)$, то есть $A \cup B \subseteq A$ (и тогда $B \subseteq A$) или $A \cup B \subseteq B$ (и тогда $A \subseteq B$).
+b) *Ключ:* для объединения переход не работает — $\forall$ не переставляется с $\vee$: «каждый элемент $X$ лежит в $A$ или в $B$» не означает «все в $A$ или все в $B$». При $A = \{1\}$, $B = \{2\}$ множество $\{1, 2\} \in \mathcal{P}(A \cup B)$, но $\{1, 2\} \notin \mathcal{P}(A) \cup \mathcal{P}(B) = \{\varnothing, \{1\}, \{2\}\}$. Включение $\mathcal{P}(A) \cup \mathcal{P}(B) \subseteq \mathcal{P}(A \cup B)$ верно по транзитивности включения. Если $A \subseteq B$, обе части равны $\mathcal{P}(B)$. Обратно, из равенства $A \cup B \in \mathcal{P}(A)$ или $A \cup B \in \mathcal{P}(B)$, то есть $B \subseteq A$ или $A \subseteq B$.
 :::
 
 ::: {.problem #prob:lec04:symdiff}
@@ -755,7 +746,7 @@ $\bigcup \mathcal{P}(A) = A$. «$\subseteq$»: если $x \in \bigcup \mathcal{
 
 $A \subseteq \mathcal{P}(\bigcup A)$: пусть $\alpha \in A$. Каждый элемент $x \in \alpha$ лежит в $\bigcup A$ (свидетель — $\alpha$), значит, $\alpha \subseteq \bigcup A$, то есть $\alpha \in \mathcal{P}(\bigcup A)$.
 
-Для $A = \{\{1\}\}$: $\bigcup A = \{1\}$ (пример [-@ex:lec04:union]), $\mathcal{P}(\{1\}) = \{\varnothing, \{1\}\}$, а $\varnothing \notin A$, так что здесь включение строгое. Равенство $\mathcal{P}(\bigcup A) = A$ бывает, например, при $A = \mathcal{P}(Y)$: тогда $\bigcup A = Y$ (пример выше), и $\mathcal{P}(\bigcup A) = \mathcal{P}(Y) = A$; так, при $A = \{\varnothing\} = \mathcal{P}(\varnothing)$ имеем $\bigcup A = \varnothing$ и $\mathcal{P}(\varnothing) = A$. Наоборот, если $\mathcal{P}(\bigcup A) = A$, то $A = \mathcal{P}(Y)$ при $Y = \bigcup A$; итак, равенство верно ровно для множеств вида $\mathcal{P}(Y)$.
+Для $A = \{\{1\}\}$: $\bigcup A = \{1\}$ (пример [-@ex:lec04:union]), $\mathcal{P}(\{1\}) = \{\varnothing, \{1\}\}$, а $\varnothing \notin A$, так что здесь включение строгое. Равенство бывает ровно при $A = \mathcal{P}(Y)$: тогда по доказанному $\bigcup A = Y$ и $\mathcal{P}(\bigcup A) = A$ (например, $A = \{\varnothing\} = \mathcal{P}(\varnothing)$); обратно, если $\mathcal{P}(\bigcup A) = A$, то $A = \mathcal{P}(Y)$ при $Y = \bigcup A$.
 :::
 
 # Итоги
@@ -771,16 +762,13 @@ $A \subseteq \mathcal{P}(\bigcup A)$: пусть $\alpha \in A$. Каждый э
 # Глоссарий
 
 $x \in A$, $x \notin A$
-:   $x$ принадлежит (не принадлежит) множеству $A$; неопределяемое отношение; [-@ax:lec04:foundation].
+:   $x$ принадлежит (не принадлежит) множеству $A$; неопределяемое отношение; [-@sec:lec04:axiomatic].
 
 Аксиома основания (нет бесконечных цепочек)
 :   не существует $x_0 \ni x_1 \ni x_2 \ni \dots$; отсюда $a \notin a$; [-@ax:lec04:foundation].
 
-Равенство множеств
-:   $A = B \iff \forall x\, (x \in A \iff x \in B)$; [-@def:lec04:equal].
-
-Аксиома равенства
-:   если $A = B$ и $B \in C$, то $A \in C$; равные множества взаимозаменяемы; [-@ax:lec04:equality].
+Равенство множеств; аксиома равенства
+:   $A = B \iff \forall x\, (x \in A \iff x \in B)$; равные множества взаимозаменяемы (если $A = B$ и $B \in C$, то $A \in C$); [-@def:lec04:equal], [-@ax:lec04:equality].
 
 $A \subseteq B$; подмножество, надмножество, собственное подмножество
 :   каждый элемент $A$ лежит в $B$; собственное — если ещё $A \ne B$; [-@def:lec04:subset].
@@ -806,11 +794,8 @@ $\mathcal{P}(A)$ (булеан)
 $\bigcup A$ (объединение семейства)
 :   множество элементов элементов $A$: $x \in \bigcup A \iff \exists \alpha\, (x \in \alpha \in A)$; [-@ax:lec04:union].
 
-$A \cup B$, $A \cap B$, $A \setminus B$
-:   объединение $\bigcup\{A, B\}$, пересечение $\{x \in A \mid x \in B\}$, разность $\{x \in A \mid x \notin B\}$; [-@def:lec04:operations].
-
-Пересекающиеся и непересекающиеся множества
-:   $A \cap B \ne \varnothing$ и $A \cap B = \varnothing$ соответственно; [-@def:lec04:operations].
+$A \cup B$, $A \cap B$, $A \setminus B$; непересекающиеся множества
+:   объединение $\bigcup\{A, B\}$, пересечение $\{x \in A \mid x \in B\}$, разность $\{x \in A \mid x \notin B\}$; $A$ и $B$ не пересекаются, если $A \cap B = \varnothing$; [-@def:lec04:operations].
 
 Универсум $U$; дополнение $\bar A$
 :   фиксированное множество, содержащее все рассматриваемые; $\bar A = U \setminus A$; [-@def:lec04:complement].
