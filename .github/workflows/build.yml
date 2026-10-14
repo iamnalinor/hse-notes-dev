@@ -71,6 +71,7 @@ jobs:
       - name: Collect PDFs
         run: |
           mkdir -p dist
+          shopt -s nullglob
           for f in build/pdf/*/*.pdf; do
             course=$(basename "$(dirname "$f")")
             cp "$f" "dist/${course}-$(basename "$f")"
@@ -82,15 +83,17 @@ jobs:
         with:
           name: pdf
           path: dist/*.pdf
+          if-no-files-found: ignore
 
       - name: Upload site data
         uses: actions/upload-artifact@v4
         with:
           name: site-data
           path: build/site-data
+          if-no-files-found: ignore
 
       - name: Publish rolling release «latest»
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && hashFiles('dist/*.pdf') != ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
