@@ -359,9 +359,24 @@ end
 -- проход 2: рендер
 -- ---------------------------------------------------------------------------
 
+-- типографика: тире не начинает строку (неразрывный пробел перед «—»)
+function fix_dashes(inlines)
+  local changed = false
+  for k = 2, #inlines do
+    local nxt = inlines[k]
+    if inlines[k - 1].t == 'Space' and nxt.t == 'Str' and nxt.text:sub(1, 3) == '—' then
+      inlines[k - 1] = pandoc.Str('\u{00A0}')
+      changed = true
+    end
+  end
+  return changed
+end
+
 -- заголовки и подписи собираются из строк атрибутов: ссылки в них разрешаем сразу
 local function md_inlines_resolved(text)
-  return md_inlines(text):walk { Cite = resolve_cite }
+  local inl = md_inlines(text):walk { Cite = resolve_cite }
+  fix_dashes(inl)
+  return inl
 end
 
 local function head_inlines(name, number, parts)
@@ -591,6 +606,7 @@ local function render(doc)
       local out = pandoc.Inlines {}
       local i = 1
       local changed = false
+      if fix_dashes(inlines) then changed = true end
       while i <= #inlines do
         local id, j = eq_label_at(inlines, i)
         if id then
