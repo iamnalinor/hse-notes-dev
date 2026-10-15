@@ -377,17 +377,17 @@ $$\left(1 + \frac1n\right)^n \to e, \qquad \left(1 + \frac{1}{n^2}\right)^n \to 
 *Решение.* (a) $n_k = 2k$; (b) $n_k = 2k - 1$; обе последовательности номеров строго возрастают. (c) $n_1 = 4 > n_2 = 2$ — порядок нарушен. (d) $n_1 = n_2 = 1$ — член выбран дважды. Для $a_n = n^{(-1)^n}$, то есть $1, \frac12, 3, \frac14, 5, \frac16, \dots$, подпоследовательность (a) — это $\frac12, \frac14, \frac16, \dots$, она стремится к $0$, хотя сама последовательность не ограничена. Сама $(a_n)$ — своя подпоследовательность ($n_k = k$), «хвост» $a_6, a_7, \dots$ — тоже ($n_k = k + 5$).
 :::
 
-```{.tikz #fig:lec05:subsequence caption="Подпоследовательность $b_k = a_{n_k}$ с номерами $n_1 = 2$, $n_2 = 3$, $n_3 = 5$, $n_4 = 8$: выбранные члены идут в исходном порядке без повторов. Стрелки не идут влево, поэтому $n_k \\ge k$"}
-\begin{tikzpicture}[x=1.15cm, y=1.4cm]
-  \foreach \i in {1,...,9} { \node[font=\small] (a\i) at (\i,1) {$a_{\i}$}; }
+```{.tikz #fig:lec05:subsequence caption="Подпоследовательность $b_k = a_{n_k}$ с номерами $n_1 = 2$, $n_2 = 3$, $n_3 = 5$, $n_4 = 8$: выбранные члены идут в исходном порядке без повторов. Член $b_k$ стоит под $a_{n_k}$, и $k$-й выбранный член не может оказаться левее $k$-го места, поэтому $n_k \\ge k$"}
+\begin{tikzpicture}[x=1.15cm, y=1.1cm]
+  \foreach \i in {1,...,9} { \node[font=\scriptsize, nbgray] at (\i,1.75) {$\i$}; \node[font=\small] (a\i) at (\i,1) {$a_{\i}$}; }
   \node[font=\small] at (10,1) {$\dots$};
-  \foreach \i in {2,3,5,8} { \draw[nbred, thick] (a\i) circle (0.3cm); }
   \foreach \k/\n in {1/2,2/3,3/5,4/8} {
-    \node[font=\small, nbred] (b\k) at (\k,0) {$b_{\k}$};
-    \draw[->, nbred] (b\k) -- (\n,0.72);
-    \node[font=\scriptsize, nbred, anchor=west] at ($(\k,0)!0.55!(\n,0.72)$) {$n_{\k} = \n$};
+    \draw[nbred, thick] (a\n) circle (0.3cm);
+    \node[font=\small, nbred] (b\k) at (\n,0) {$b_{\k}$};
+    \draw[<-, nbred] (b\k) -- (\n,0.68);
   }
-  \node[font=\small, nbred] at (5,0) {$\dots$};
+  \node[font=\small, nbred] at (10,0) {$\dots$};
+  \node[font=\small, anchor=east, nbgray] at (0.5,1.75) {номер $n$:};
   \node[font=\small, anchor=east] at (0.5,1) {$(a_n)$:};
   \node[font=\small, anchor=east, nbred] at (0.5,0) {$(b_k)$:};
 \end{tikzpicture}
@@ -505,7 +505,8 @@ $\sup = 1$, $\inf = 0$; ни одно из них не достигается.
 :::
 
 ::: {.problem #prob:lec05:sup-constrained}
-Найдите супремум и инфимум множеств (a) $X = \left\{\dfrac{1 + m}{3 + 2n} \mid m, n \in \N,\ m \le n\right\}$; (b) $Y = \left\{\dfrac{1 + m}{1 + 2n} \mid m, n \in \N,\ m \le n\right\}$.
+Найдите супремум и инфимум множеств
+$$\text{(a) } X = \left\{\frac{1 + m}{3 + 2n} \mid m, n \in \N,\ m \le n\right\}; \qquad \text{(b) } Y = \left\{\frac{1 + m}{1 + 2n} \mid m, n \in \N,\ m \le n\right\}.$$
 :::
 
 ::: answer
@@ -557,7 +558,7 @@ $$f(x) - x = x\left(\frac13 - x\right), \qquad \frac13 - f(x) = \left(x - \frac1
 
 Если $x \in \left(\frac13; 1\right)$, то $f(x) < x < 1$ и $f(x) > \frac13$. Последовательность, попавшая в $\left(\frac13; 1\right)$, остаётся в нём и убывает.
 
-(a) $x_1 = \frac16 \in \left(0; \frac13\right)$: возрастает, ограничена числом $\frac13$, сходится к $L \in \left\{0, \frac13\right\}$ с $L \ge \frac16$, то есть к $\frac13$. (b) $x_1 = \frac12 \in \left(\frac13; 1\right)$: убывает, ограничена снизу числом $\frac13$, предел $L \ge \frac13$, то есть $\frac13$. (c) $x_2 = f\left(\frac76\right) = \frac76 \cdot \frac16 = \frac{7}{36} \in \left(0; \frac13\right)$; начиная со второго члена последовательность возрастает и ограничена, по утверждению [-@prop:lec03:finite-change] и теореме Вейерштрасса она сходится, и, как в (a), к $\frac13$. Случай (c) показывает, что монотонность может начинаться не с первого члена.
+Случай (a): $x_1 = \frac16 \in \left(0; \frac13\right)$, последовательность возрастает, ограничена числом $\frac13$, сходится к $L \in \left\{0, \frac13\right\}$ с $L \ge \frac16$, то есть к $\frac13$. (b) $x_1 = \frac12 \in \left(\frac13; 1\right)$: убывает, ограничена снизу числом $\frac13$, предел $L \ge \frac13$, то есть $\frac13$. (c) $x_2 = f\left(\frac76\right) = \frac76 \cdot \frac16 = \frac{7}{36} \in \left(0; \frac13\right)$; начиная со второго члена последовательность возрастает и ограничена, по утверждению [-@prop:lec03:finite-change] и теореме Вейерштрасса она сходится, и, как в (a), к $\frac13$. Случай (c) показывает, что монотонность может начинаться не с первого члена.
 :::
 
 ## Число $e$ и неопределённость $1^\infty$
@@ -573,7 +574,7 @@ $1 + e^{3/2}$.
 ::: solution
 Знаменатель $3\sqrt[n]{4} - 2 \to 3 - 2 = 1 \ne 0$ и положителен; $\sqrt[n]{4n} = \sqrt[n]{4} \cdot \sqrt[n]{n} \to 1$ (утверждение [-@prop:lec04:standard]). Остаётся $b_n = \left(\frac{2n}{2n - 3}\right)^{n+1} = \left(1 + \frac{3}{2n - 3}\right)^{n+1}$ при $n \ge 2$. *Ключ:* возвести в квадрат и положить $m = 2n - 3$; тогда $2n + 2 = m + 5$ и
 $$b_n^2 = \left(1 + \frac3m\right)^{m + 5} = \left(1 + \frac3m\right)^{m} \left(1 + \frac3m\right)^5.$$
-Последовательность $c_m = \left(1 + \frac3m\right)^{m+5}$ стремится к $e^3$ (утверждение [-@prop:lec05:e-power]), $b_n^2 = c_{2n - 3}$ — её подпоследовательность ($m = 1, 3, 5, \dots$), поэтому $b_n^2 \to e^3$, а $b_n \to e^{3/2}$ по утверждению [-@prop:lec05:root]. Ответ: $\frac{1 + e^{3/2}}{1}$.
+Последовательность $c_m = \left(1 + \frac3m\right)^{m+5}$ стремится к $e^3$ (утверждение [-@prop:lec05:e-power]), $b_n^2 = c_{2n - 3}$ — её подпоследовательность ($m = 1, 3, 5, \dots$), поэтому $b_n^2 \to e^3$, а $b_n \to e^{3/2}$ по утверждению [-@prop:lec05:root]. Числитель стремится к $1 + e^{3/2}$, знаменатель — к $1$.
 :::
 
 ::: {.problem #prob:lec05:e-limits}
