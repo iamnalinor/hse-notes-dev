@@ -333,6 +333,8 @@ def lint_notes(path: Path, rel: str, cfg: dict, labels: dict, rep: Report) -> No
                 cid = c["citationId"]
                 if cid not in labels.get(course, {}):
                     rep.err(rel, f"ссылка @{cid} никуда не ведёт")
+        elif t == "Str" and "$" in n["c"] and not n["c"].startswith("{#eq:"):
+            rep.err(rel, f"знак $ в тексте — формула не распознана (пробел у $ внутри или непарный $): «{n['c']}»")
         elif t == "Str" and re.fullmatch(r"\{#eq:[^}]*\}", n["c"]):
             if not LABEL_RE.match(n["c"][2:-1]):
                 rep.err(rel, f"метка формулы {n['c']} не по схеме eq:lecNN:slug")

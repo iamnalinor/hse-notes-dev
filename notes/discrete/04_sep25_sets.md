@@ -484,6 +484,8 @@ $$A \setminus (B \setminus C) = A \cap \overline{B \cap \bar C} = A \cap (\bar B
 
 *Решение поэлементно.* Пусть $x \in A \cup B$. Если $x \in A$, то $x \in C$, так как $A \subseteq C$; если $x \in B$ — так как $B \subseteq C$.
 
+*Решение через тождества.* $C = A \cup C = A \cup (B \cup C) = (A \cup B) \cup C$, и по лемме [-@lem:lec04:subset-equiv] $A \cup B \subseteq C$.
+
 Итак, $A \cup B$ — наименьшее множество, содержащее и $A$, и $B$. Двойственное утверждение для пересечения — в самопроверке.
 :::
 
@@ -672,7 +674,7 @@ b) Нет: верно только $\mathcal{P}(A) \cup \mathcal{P}(B) \subseteq
 ::: solution
 a) Для каждого $X$: $X \in \mathcal{P}(A \cap B) \iff X \subseteq A \cap B \iff X \subseteq A \wedge X \subseteq B \iff X \in \mathcal{P}(A) \cap \mathcal{P}(B)$. *Ключ:* средний переход — «$X \subseteq A \cap B$ тогда и только тогда, когда каждый элемент $X$ лежит и в $A$, и в $B$» ($\forall$ переставляется с $\wedge$, замечание [-@rem:lec02:distribute]).
 
-b) *Ключ:* для объединения переход не работает — $\forall$ не переставляется с $\vee$: «каждый элемент $X$ лежит в $A$ или в $B$» не означает «все в $A$ или все в $B$». При $A = \{1\}$, $B = \{2\}$ множество $\{1, 2\} \in \mathcal{P}(A \cup B)$, но $\{1, 2\} \notin \mathcal{P}(A) \cup \mathcal{P}(B) = \{\varnothing, \{1\}, \{2\}\}$. Включение $\mathcal{P}(A) \cup \mathcal{P}(B) \subseteq \mathcal{P}(A \cup B)$ верно по транзитивности включения. Если $A \subseteq B$, обе части равны $\mathcal{P}(B)$. Обратно, из равенства $A \cup B \in \mathcal{P}(A)$ или $A \cup B \in \mathcal{P}(B)$, то есть $B \subseteq A$ или $A \subseteq B$.
+b) *Ключ:* для объединения переход не работает — $\forall$ не переставляется с $\vee$: «каждый элемент $X$ лежит в $A$ или в $B$» не означает «все в $A$ или все в $B$». При $A = \{1\}$, $B = \{2\}$ множество $\{1, 2\} \in \mathcal{P}(A \cup B)$, но $\{1, 2\} \notin \mathcal{P}(A) \cup \mathcal{P}(B) = \{\varnothing, \{1\}, \{2\}\}$. Включение $\mathcal{P}(A) \cup \mathcal{P}(B) \subseteq \mathcal{P}(A \cup B)$ верно по транзитивности включения. Если $A \subseteq B$, обе части равны $\mathcal{P}(B)$ (так как $\mathcal{P}(A) \subseteq \mathcal{P}(B)$). Обратно, из равенства и $A \cup B \in \mathcal{P}(A \cup B)$ следует $A \cup B \in \mathcal{P}(A)$ или $A \cup B \in \mathcal{P}(B)$, то есть $B \subseteq A$ или $A \subseteq B$.
 :::
 
 ::: {.problem #prob:lec04:symdiff}
