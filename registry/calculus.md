@@ -1,7 +1,7 @@
 ---
 course: calculus
 title: Реестр теории по математическому анализу
-based_on: конспекты лекций 1–2
+based_on: конспекты лекций 1–4
 ---
 
 # Соглашения курса и ключевые корнер-кейсы
@@ -17,6 +17,11 @@ based_on: конспекты лекций 1–2
 - «Возрастающая» в курсе — строго ($a_n < a_{n+1}$), нестрогая — «неубывающая» [-@rem:lec02:increasing-convention].
 - Ограниченность сверху — со строгим неравенством $a_n < C$; для ограниченности строгость неважна [-@rem:lec02:strict].
 - Последовательность — не множество значений [-@rem:lec02:not-a-set]; неограниченная не обязана «расти» ($n^{(-1)^n}$) [-@rem:lec02:unbounded-grows].
+- В определении предела порядок «$\forall \varepsilon\ \exists N\ \forall n$» существен: при «$\exists N\ \forall \varepsilon$» сходятся только финально постоянные, при «$\exists n$» вместо «$\forall n$» $(-1)^n$ «стремилась» бы к $\pm 1$ [-@rem:lec03:quantifiers].
+- Ограниченная последовательность не обязана сходиться: $(-1)^n$ [-@rem:lec03:bounded-not-convergent]; неограниченная не обязана быть б.б.: $n^{(-1)^n}$ [-@rem:lec04:unbounded-not-large].
+- Б.б. в курсе — стремление к $\infty$ без знака; $(-1)^n n \to \infty$, но не к $\pm\infty$ [-@rem:lec04:infinity-symbol].
+- Отделимость от нуля требует $|d_n| > \delta$ для *всех* $n$: $0, 1, 1, \dots$ сходится к $1$, но не отделима [-@rem:lec04:separated-quantifiers].
+- Предельный переход превращает строгое неравенство в нестрогое: $\frac1n > 0$, но $\lim \frac1n = 0$ [-@rem:lec04:strict].
 
 # Лекция 1 — Высказывания, предикаты, кванторы. Метод математической индукции. Неравенство Бернулли
 
@@ -132,6 +137,102 @@ $(x_1 + \dots + x_s)^n = \sum_{m_1 + \dots + m_s = n} P(n; m_1, \dots, m_s) x_1^
 
 ::: {.proposition ref="prop:lec02:bounded-abs" status="доказано в лекции 2"}
 $(a_n)$ ограничена $\Leftrightarrow \exists C > 0\ \forall n\colon |a_n| < C$. *Идея:* «$\Leftarrow$»: $-C < a_n < C$; «$\Rightarrow$»: $C = |C_1| + |C_2|$.
+:::
+
+# Лекция 3 — Предел последовательности. Единственность предела, ограниченность сходящейся последовательности, предел суммы
+
+::: {.definition ref="def:lec03:neighborhood"}
+$\varepsilon$-окрестность точки $a$: $U_\varepsilon(a) = (a - \varepsilon, a + \varepsilon)$, $\varepsilon > 0$.
+:::
+
+::: {.definition ref="def:lec03:limit"}
+$\lim\limits_{n \to \infty} a_n = a \in \R$, если $\forall \varepsilon > 0\ \exists N = N(\varepsilon) \in \N\ \forall n > N\colon |a_n - a| < \varepsilon$. Сходящаяся — имеет предел-число; расходящаяся — не имеет: $\forall a\ \exists \varepsilon > 0\ \forall N\ \exists n > N\colon |a_n - a| \ge \varepsilon$.
+:::
+
+::: {.proposition ref="prop:lec03:finitely-many" status="доказано в лекции 3"}
+$a_n \to a \Leftrightarrow$ для любого $\varepsilon > 0$ вне $U_\varepsilon(a)$ лишь конечное число членов (номеров). *Идея:* номера вне окрестности не больше $N(\varepsilon)$; обратно, $N$ — наибольший из них.
+:::
+
+::: {.proposition ref="prop:lec03:finite-change" status="доказано в лекции 3"}
+Изменение конечного числа членов и сдвиг номера $b_n = a_{n \pm p}$ не меняют сходимости и предела. *Идея:* $N_b = \max(N_a, n_0)$ или $\max(N_a + p, n_0)$.
+:::
+
+::: {.theorem ref="thm:lec03:uniqueness" status="доказано в лекции 3"}
+Если $a_n \to a$ и $a_n \to b$, то $a = b$. *Идея:* от противного; окрестности радиуса $\frac{|b - a|}{3}$ не пересекаются, а член с номером $\max(N_1, N_2) + 1$ лежит в обеих.
+:::
+
+::: {.theorem ref="thm:lec03:bounded" status="доказано в лекции 3"}
+Сходящаяся последовательность ограничена. *Идея:* $\varepsilon = 1$; $C = \max(|a_1|, \dots, |a_N|, |a|) + 1$.
+:::
+
+::: {.corollary ref="cor:lec03:unbounded" status="доказано в лекции 3"}
+Неограниченная последовательность расходится. Обратное неверно: $(-1)^n$ ограничена и расходится.
+:::
+
+::: {.theorem ref="thm:lec03:sum" status="доказано в лекции 3"}
+Если $a_n \to a$, $b_n \to b$, $c \in \R$, то $a_n \pm b_n \to a \pm b$, $c\,a_n \to c\,a$. *Идея:* для суммы берём номера для $\frac\varepsilon2$ и неравенство треугольника; для $c\,a_n$ — номер для $\frac{\varepsilon}{|c|}$.
+:::
+
+# Лекция 4 — Бесконечно малые и бесконечно большие последовательности. Арифметика предела. Предельный переход в неравенствах. Теорема о двух милиционерах
+
+::: {.definition ref="def:lec04:infinite-limit"}
+$\lim a_n = \infty$: $\forall M > 0\ \exists N = N(M)\ \forall n > N\colon |a_n| > M$; $\lim a_n = +\infty$: то же с $a_n > M$; $\lim a_n = -\infty$: с $a_n < -M$.
+:::
+
+::: {.definition ref="def:lec04:small-large"}
+Бесконечно малая (б.м.): $a_n \to 0$; бесконечно большая (б.б.): $a_n \to \infty$ (без знака).
+:::
+
+::: {.proposition ref="prop:lec04:reciprocal" status="доказано в лекции 4"}
+$\frac{1}{\text{б.б.}}$ — б.м.; $\frac{1}{\text{б.м.}}$ — б.б. (при $a_n \ne 0$). *Идея:* $\left|\frac{1}{a_n}\right| < \varepsilon \Leftrightarrow |a_n| > \frac1\varepsilon$; номер $N\left(\frac1\varepsilon\right)$.
+:::
+
+::: {.proposition ref="prop:lec04:bounded-small" status="доказано в лекции 4"}
+Ограниченная, умноженная на б.м., — б.м. *Идея:* $|a_n b_n| \le C|b_n|$, номер $N\left(\frac\varepsilon C\right)$.
+:::
+
+::: {.corollary ref="cor:lec04:small-algebra" status="доказано в лекции 4"}
+Сумма, разность, произведение б.м. и произведение б.м. на число — б.м.; б.м. ограничена.
+:::
+
+::: {.lemma ref="lem:lec04:decomposition" status="доказано в лекции 4"}
+$a_n \to a \Leftrightarrow a_n = a + \alpha_n$, где $\alpha_n$ — б.м.
+:::
+
+::: {.theorem ref="thm:lec04:product" status="доказано в лекции 4"}
+Если $a_n \to a$, $b_n \to b$, то $a_n b_n \to ab$. *Идея:* $a_n b_n - ab = a\beta_n + b\alpha_n + \alpha_n\beta_n$ — сумма б.м.
+:::
+
+::: {.definition ref="def:lec04:separated"}
+$(d_n)$ отделима от нуля: $\exists \delta > 0\ \forall n \in \N\colon |d_n| > \delta$.
+:::
+
+::: {.proposition ref="prop:lec04:separated" status="доказано в лекции 4"}
+Если $a_n \to a \ne 0$ и $a_n \ne 0$ при всех $n$, то $(a_n)$ отделима от нуля. *Идея:* $\varepsilon_0 = \frac{|a|}{2}$, $\delta = \frac12\min\left(|a_1|, \dots, |a_N|, \frac{|a|}{2}\right)$.
+:::
+
+::: {.proposition ref="prop:lec04:reciprocal-bounded" status="доказано в лекции 4"}
+$\frac{1}{\text{отделимая}}$ — ограниченная ($C = \frac1\delta$); $\frac{1}{\text{ограниченная}}$ — отделимая (при $c_n \ne 0$, $\delta = \frac1C$).
+:::
+
+::: {.theorem ref="thm:lec04:quotient" status="доказано в лекции 4"}
+Если $a_n \to a$, $b_n \to b \ne 0$, $b_n \ne 0$, то $\frac{a_n}{b_n} \to \frac ab$. *Идея:* $\frac{a_n}{b_n} - \frac ab = \frac1b \cdot \frac{1}{b_n} \cdot (b\alpha_n - a\beta_n)$ — ограниченная · б.м.; $\frac{1}{b_n}$ ограничена, так как $b_n$ отделима от нуля.
+:::
+
+::: {.theorem ref="thm:lec04:inequality" status="доказано в лекции 4"}
+Если $a_n \to a$, $b_n \to b$ и $a_n \ge b_n$ при $n > N$, то $a \ge b$. Из строгого неравенства следует только нестрогое ($\frac1n > 0$). *Идея:* от противного, $\varepsilon_0 = \frac{b - a}{3}$, непересекающиеся окрестности дают $a_n < b_n$.
+:::
+
+::: {.corollary ref="cor:lec04:bound-limit" status="доказано в лекции 4"}
+Если $a_n \to a$ и $a_n \le C$ (соответственно $\ge C$) с некоторого номера, то $a \le C$ (соответственно $a \ge C$).
+:::
+
+::: {.theorem ref="thm:lec04:squeeze" status="доказано в лекции 4"}
+Теорема о двух милиционерах: если $a_n \le b_n \le c_n$ при $n > N$ и $a_n \to a$, $c_n \to a$, то $b_n \to a$. *Идея:* $a - \varepsilon < a_n \le b_n \le c_n < a + \varepsilon$ при $n > \max(N, N_1, N_2)$.
+:::
+
+::: {.proposition ref="prop:lec04:standard" status="доказано в лекции 4"}
+$q^n \to 0$ ($|q| < 1$), $\to +\infty$ ($q > 1$), $\to \infty$ ($q < -1$); $\sqrt[n]{a} \to 1$ ($a > 0$); $\sqrt[n]{n} \to 1$; $\frac{n^k}{a^n} \to 0$ ($a > 1$); $\frac{a^n}{n!} \to 0$; $\frac{n!}{n^n} \to 0$. *Идея:* Бернулли или один член бинома + теорема о двух милиционерах; для $\frac{a^n}{n!}$ — множители $\frac{|a|}{j} \le \frac12$ при $j > 2|a|$.
 :::
 
 # Глоссарий курса
