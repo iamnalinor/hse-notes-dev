@@ -158,7 +158,7 @@ $$a = bq + r, \qquad 0 \le r < |b|.$$
   \node[nbblue, above=3pt] at (-17,0.1) {$a = -17$};
   \draw[decorate, decoration={brace, amplitude=4pt, mirror}, nbgreen, thick] (-20,-0.75) -- (-17,-0.75) node[midway, below=5pt] {$r = 3$};
   \draw[decorate, decoration={brace, amplitude=4pt}, nbred, thick, dashed] (-17,1.0) -- (-15,1.0) node[midway, above=5pt, align=center] {$2$: не остаток};
-  \node[nbgreen, above=3pt] at (-20,0.15) {$bq = 5 \cdot (-4)$};
+  \node[nbgreen, anchor=south east] at (-20,0.15) {$bq = 5 \cdot (-4)$};
   \node[anchor=west, nbgray] at (-12,0.9) {кратные $5$ отмечены длинными штрихами};
 \end{tikzpicture}
 ```
