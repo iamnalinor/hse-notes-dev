@@ -135,6 +135,8 @@ $a_n \to a$ тогда и только тогда, когда $\alpha_n = a_n - 
 Условие $|a_n - a| < \varepsilon$ из определения $a_n \to a$ и условие $|\alpha_n - 0| < \varepsilon$ из определения $\alpha_n \to 0$ — одно и то же неравенство. Поэтому годятся одни и те же номера $N(\varepsilon)$.
 :::
 
+Например, $\frac{n + 1}{n} = 1 + \frac1n$ с $\alpha_n = \frac1n$, а для сквозной последовательности $1 + \frac{(-1)^n}{n}$ бесконечно малая $\alpha_n = \frac{(-1)^n}{n}$ меняет знак.
+
 ::: {.theorem #thm:lec04:product title="предел произведения"}
 Если $a_n \to a$, $b_n \to b$, то $a_n b_n \to ab$.
 :::
@@ -211,6 +213,8 @@ $$|a_n| \ge |a| - |a_n - a| > |a| - \frac{|a|}{2} = \frac{|a|}{2}.$$
 1. Из $|d_n| > \delta$ следует $\left|\frac{1}{d_n}\right| < \frac1\delta$; подходит $C = \frac1\delta$.
 2. Из $0 < |c_n| < C$ следует $\left|\frac{1}{c_n}\right| > \frac1C$; подходит $\delta = \frac1C$.
 :::
+
+Например, $d_n = 2 - \frac1n \ge 1 > \frac12$, поэтому $\left|\frac{1}{d_n}\right| < 2$; а $c_n = \frac1n$ ограничена ($|c_n| < 2$), и $\frac{1}{c_n} = n$ отделима от нуля ($\delta = \frac12$) — хотя и не ограничена.
 
 ::: {.theorem #thm:lec04:quotient title="предел частного"}
 Если $a_n \to a$, $b_n \to b$, $b \ne 0$ и $b_n \ne 0$ при всех $n$, то $\dfrac{a_n}{b_n} \to \dfrac ab$.

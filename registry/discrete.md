@@ -1,7 +1,7 @@
 ---
 course: discrete
 title: Реестр теории по дискретной математике
-based_on: конспекты лекций 1–4
+based_on: конспекты лекций 1–6
 ---
 
 # Соглашения курса и ключевые корнер-кейсы
@@ -20,6 +20,12 @@ based_on: конспекты лекций 1–4
 - $\forall x \in \varnothing\ \varphi$ истинно, $\exists x \in \varnothing\ \varphi$ ложно (замечание [-@rem:lec04:bounded-empty]).
 - $(A \cup B) \setminus B = A \setminus B$, а не $A$; $(A \times B) \cup (C \times D) \ne (A \cup C) \times (B \cup D)$ (замечания [-@rem:lec04:minus], [-@rem:lec04:product-union]).
 - Сокращать $A \times C \subseteq B \times C$ на $C$ можно только при $C \ne \varnothing$ (замечание [-@rem:lec04:cancel-empty]); $A^0 = \{\varnothing\}$.
+- База ПМИ в курсе — $\varphi(0)$ (замечание [-@rem:lec05:nat]); переход проверять и при наименьшем допустимом $n$ («все лошади одной масти», замечание [-@rem:lec05:horses]); в сильной индукции малые $n$, где нет нужных предыдущих значений, разбираются отдельно (замечание [-@rem:lec05:small-cases]).
+- ПНЧ верен для подмножеств $\N$ и неверен для $\Z$ и положительных рациональных (замечание [-@rem:lec05:lnp-why]).
+- С лекции 6 «число» — целое (замечание [-@rem:lec06:integers]); $0 \mid 0$ верно, $0$ делит только $0$ (замечание [-@rem:lec06:zero]).
+- Остаток всегда неотрицателен: $-17 = 5 \cdot (-4) + 3$, а не $5 \cdot (-3) - 2$ (замечание [-@rem:lec06:negative]); сравнения — только при $m > 1$ (замечание [-@rem:lec06:modulus]).
+- Сравнения нельзя сокращать ($6 \equiv 16 \pmod{10}$, но $3 \not\equiv 8$) и нельзя приводить показатель степени по модулю $m$ ($2^{10} \not\equiv 2^3 \pmod 7$) (замечания [-@rem:lec06:no-cancel], [-@rem:lec06:exponent]).
+- $1$ не простое (иначе нет единственности разложения); $\deg(p, 0)$ не определено (замечание [-@rem:lec06:one], определение [-@def:lec06:deg]).
 
 # Лекция 1 — Истинность, ложность и высказывания
 
@@ -275,6 +281,122 @@ $(a_1, \dots, a_n) = ((\dots(a_1, a_2), \dots), a_n)$ при $n \ge 2$.
 
 ::: {.lemma ref="lem:lec04:tuple" status="доказано в лекции 4"}
 $(a_1, \dots, a_n) = (b_1, \dots, b_n) \iff \forall i\ a_i = b_i$. *Идея:* критерий равенства пар $n - 1$ раз.
+:::
+
+# Лекция 5 — Индукция на натуральных числах
+
+::: {.axiom ref="ax:lec05:induction"}
+ПМИ: $\varphi(0) \wedge \forall n \in \N\, (\varphi(n) \to \varphi(n + 1)) \to \forall n \in \N\ \varphi(n)$; для множеств: если $X \subseteq \N$, $0 \in X$ и $n \in X \Rightarrow n + 1 \in X$ при всех $n$, то $X = \N$.
+:::
+
+::: {.proposition ref="prop:lec05:shifted" status="доказано в лекции 5"}
+Если $\varphi(n_0)$ и $\varphi(n) \to \varphi(n + 1)$ при всех $n \ge n_0$, то $\varphi(n)$ при всех $n \ge n_0$. *Идея:* ПМИ для $\psi(n) := (n \ge n_0 \to \varphi(n))$; при $n < n_0$ — пустая истина.
+:::
+
+::: {.definition ref="def:lec05:progressive"}
+$X \subseteq \N$ прогрессивно, $\mathrm{Prog}(X)$, если $\forall n\, \bigl(\forall m < n\ (m \in X) \to n \in X\bigr)$.
+:::
+
+::: {.proposition ref="prop:lec05:strong" status="доказано в лекции 5 (теорема о равносильности)"}
+ПСИ: всякое прогрессивное $X \subseteq \N$ равно $\N$.
+:::
+
+::: {.lemma ref="lem:lec05:prog-zero" status="доказано в лекции 5"}
+Если $\mathrm{Prog}(X)$, то $0 \in X$. *Идея:* при $n = 0$ посылка $\forall m < 0\ (m \in X)$ — пустая истина.
+:::
+
+::: {.proposition ref="prop:lec05:lnp" status="доказано в лекции 5 (теорема о равносильности)"}
+ПНЧ: всякое непустое $X \subseteq \N$ имеет наименьший элемент $\min X$. Для $\Z$ и для $\{x \in \Q \mid x > 0\}$ неверно.
+:::
+
+::: {.theorem ref="thm:lec05:equiv" status="доказано в лекции 5"}
+ПСИ, ПНЧ и ПМИ равносильны. *Идея:* ПСИ $\Rightarrow$ ПНЧ — если у $X$ нет минимума, то $\overline{X}$ прогрессивно; ПНЧ $\Rightarrow$ ПМИ — $n = \min \overline{X} = m + 1$ с $m \in X$; ПМИ $\Rightarrow$ ПСИ — индукция для $Y = \{n \mid \forall m < n\ (m \in X)\}$.
+:::
+
+# Лекция 6 — Делимость
+
+::: {.definition ref="def:lec06:divides"}
+$a \mid b \iff \exists k \in \Z\ b = ak$; делитель, кратное. $0 \mid 0$ верно.
+:::
+
+::: {.lemma ref="lem:lec06:basic" status="доказано в лекции 6"}
+$a \mid 0$; $1 \mid a$; $0 \mid a \Rightarrow a = 0$; $a \mid 1 \Rightarrow a = \pm 1$. *Идея:* последнее — из $1 = |a| \cdot |k| \ge |a| \ge 1$.
+:::
+
+::: {.lemma ref="lem:lec06:order" status="доказано в лекции 6"}
+$a \mid a$; $a \mid b \wedge b \mid c \Rightarrow a \mid c$; $a \mid b \wedge b \mid a \Rightarrow a = \pm b$. *Идея:* в третьем $a = a k_1 k_2$, случаи $a = 0$ и $k_1 k_2 = 1$.
+:::
+
+::: {.lemma ref="lem:lec06:sum" status="доказано в лекции 6"}
+$a \mid b \wedge a \mid c \Rightarrow a \mid b \pm c$.
+:::
+
+::: {.corollary ref="cor:lec06:sum" status="доказано в лекции 6"}
+Если $a \mid b$ и $a \mid b + c$ (или $a \mid b - c$), то $a \mid c$.
+:::
+
+::: {.theorem ref="thm:lec06:division-nat" status="доказано в лекции 6"}
+Для $a, b \in \N$, $b \ne 0$, существует единственная пара $(q, r) \in \N^2$ с $a = bq + r$, $0 \le r < b$. *Идея:* $q + 1 = \min\{s \in \N \mid a < bs\}$ по ПНЧ; единственность — из $r - r' = b(q' - q) \ge b$.
+:::
+
+::: {.definition ref="def:lec06:quotient"}
+$q$ — неполное частное, $r$ — остаток от деления $a$ на $b$.
+:::
+
+::: {.corollary ref="cor:lec06:division" status="доказано в лекции 6"}
+Теорема о делении с остатком: для $a$ и $b \ne 0$ существует единственная пара $(q, r) \in \Z \times \N$ с $a = bq + r$, $0 \le r < |b|$. *Идея:* делим $|a|$ на $|b|$; при $a < 0$, $r' > 0$ берём $-q' - 1$ и $|b| - r'$.
+:::
+
+::: {.definition ref="def:lec06:congruence"}
+При $m > 1$: $a \equiv b \pmod m \iff m \mid a - b$.
+:::
+
+::: {.lemma ref="lem:lec06:same-rem" status="доказано в лекции 6"}
+$a \equiv b \pmod m$ тогда и только тогда, когда остатки от деления $a$ и $b$ на $m$ равны. *Идея:* $m \mid r - r'$ и $|r - r'| < m$.
+:::
+
+::: {.corollary ref="cor:lec06:distinct" status="доказано в лекции 6"}
+Числа $0, 1, \dots, m - 1$ попарно несравнимы по модулю $m$.
+:::
+
+::: {.corollary ref="cor:lec06:to-rem" status="доказано в лекции 6"}
+$a \equiv r \pmod m$, где $r$ — остаток от деления $a$ на $m$.
+:::
+
+::: {.corollary ref="cor:lec06:equivalence" status="доказано в лекции 6"}
+Сравнимость по модулю $m$ рефлексивна, симметрична и транзитивна.
+:::
+
+::: {.lemma ref="lem:lec06:arith" status="доказано в лекции 6"}
+Если $a \equiv b$ и $c \equiv d \pmod m$, то $a \pm c \equiv b \pm d$, $ac \equiv bd$, $a^n \equiv b^n \pmod m$ ($n \in \N$). *Идея:* $ac - bd = m(bk_2 + dk_1 + mk_1k_2)$; степень — индукцией.
+:::
+
+::: {.definition ref="def:lec06:prime"}
+Простое: $p > 1$, делители только $\pm 1, \pm p$; составное: $n > 1$, не простое. Отрицательные числа, $0$ и $1$ — ни то ни другое.
+:::
+
+::: {.lemma ref="lem:lec06:composite" status="доказано в лекции 6"}
+$n > 1$ составное тогда и только тогда, когда $n = km$ с $1 < k, m < n$.
+:::
+
+::: {.definition ref="def:lec06:factorization"}
+Разложение $n \ge 1$: $n = p_1^{a_1} \cdots p_s^{a_s}$, $p_i$ — попарно различные простые, $a_i \in \N$; степень простого $p$ в разложении ($0$, если $p$ нет в списке); разложения существенно одинаковы, если степени всех простых совпадают.
+:::
+
+::: {.theorem ref="thm:lec06:fta" status="доказано в лекции 6"}
+ОТА: каждое $n \ge 1$ имеет разложение на простые, и любые два его разложения существенно одинаковы. *Идея:* обе части — минимальным контрпримером. Единственность: у наименьшего «плохого» $n$ общих простых в двух разложениях нет; для $p > q$ из разных разложений число $m = (p - q) \cdot \frac{n}{p} < n$ имеет разложения с разной степенью $q$, если $q \nmid p - q$, а $q \mid p - q$ даёт $q \mid p$.
+:::
+
+::: {.definition ref="def:lec06:deg"}
+$\deg(p, n)$ для $n \ne 0$ — степень простого $p$ в любом разложении $\pm p_1^{a_1} \cdots p_s^{a_s}$ числа $n$; $\deg(p, ab) = \deg(p, a) + \deg(p, b)$.
+:::
+
+::: {.theorem ref="thm:lec06:infinite" status="доказано в лекции 6"}
+Простых чисел бесконечно много. *Идея:* простой делитель числа $p_1 \cdots p_n + 1$ не может быть ни одним из $p_i$.
+:::
+
+::: {.lemma ref="lem:lec06:criterion" status="доказано в лекции 6"}
+Признак делимости: для $a, b \ne 0$ $a \mid b$ тогда и только тогда, когда $\deg(p, a) \le \deg(p, b)$ для всех простых $p$. *Идея:* $\deg(p, ak) = \deg(p, a) + \deg(p, k)$; обратно $b = a \cdot (\pm \prod p_i^{\beta_i - \alpha_i})$.
 :::
 
 # Глоссарий курса
