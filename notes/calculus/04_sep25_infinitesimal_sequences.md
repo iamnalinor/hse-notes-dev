@@ -42,7 +42,7 @@ $$\forall M > 0\ \ \exists N = N(M)\ \ \forall n > N\colon\ |a_n| > M.$$
 ```{.tikz #fig:lec04:small-large caption="Слева: бесконечно малая $\frac{(-1)^n}{n}$; при $\varepsilon = 0{,}3$ все члены с $n > 3$ в полосе $|y| < \varepsilon$. Справа: бесконечно большая $(-1)^n n$; при $M = 4{,}5$ все члены с $n > 4$ вне полосы $|y| \le M$, по разные стороны от неё"}
 \begin{tikzpicture}
 \begin{axis}[nbaxis, axis on top, xlabel={$n$}, ylabel={$y$}, xmin=0, xmax=9.5, ymin=-1.15, ymax=0.8, width=6.6cm, height=5.6cm,
-  xtick={1,3,5,7,9}, ytick={-1,-0.3,0.3}, yticklabels={$-1$, $-0{,}3$, $0{,}3$}, ticklabel style={font=\small}]
+  xtick=\empty, ytick={-1,-0.3,0.3}, yticklabels={$-1$, $-0{,}3$, $0{,}3$}, ticklabel style={font=\small}]
   \fill[nbblue!15] (axis cs:0,-0.3) rectangle (axis cs:9.3,0.3);
   \draw[aux, nbred] (axis cs:3,-1.15) -- (axis cs:3,0.8);
   \addplot[only marks, mark=*, mark size=1.8pt, nbred, samples at={1,2,3}] {cos(180*x)/x};
@@ -50,7 +50,7 @@ $$\forall M > 0\ \ \exists N = N(M)\ \ \forall n > N\colon\ |a_n| > M.$$
   \node[nbred, anchor=south west, font=\small] at (axis cs:3,0.45) {$N = 3$};
 \end{axis}
 \begin{axis}[at={(7cm,0)}, nbaxis, axis on top, xlabel={$n$}, ylabel={$y$}, xmin=0, xmax=9.5, ymin=-10, ymax=10, width=6.6cm, height=5.6cm,
-  xtick={1,3,5,7,9}, ytick={-4.5,4.5}, yticklabels={$-M$, $M$}, ticklabel style={font=\small}]
+  xtick=\empty, ytick={-4.5,4.5}, yticklabels={$-M$, $M$}, ticklabel style={font=\small}]
   \fill[nbgray!20] (axis cs:0,-4.5) rectangle (axis cs:9.3,4.5);
   \draw[aux, nbred] (axis cs:4,-10) -- (axis cs:4,10);
   \addplot[only marks, mark=*, mark size=1.8pt, nbred, samples at={1,2,3,4}] {cos(180*x)*x};
@@ -306,8 +306,8 @@ $$a - \varepsilon < a_n \le b_n \le c_n < a + \varepsilon,$$
   \addplot[only marks, mark=triangle*, mark size=2.2pt, nbgreen!70!black, samples at={1,...,13}] {1 - 1/x};
   \addplot[only marks, mark=*, mark size=1.8pt, nbblue, samples at={1,...,13}] {1 + sin(deg(x))/x};
   \node[nbred, anchor=south west, font=\small] at (axis cs:1.2,1.9) {$c_n = 1 + \frac1n$};
-  \node[nbgreen!70!black, anchor=north west, font=\small] at (axis cs:1.2,0.05) {$a_n = 1 - \frac1n$};
-  \node[nbblue, anchor=west, font=\small] at (axis cs:2.3,1.2) {$b_n = 1 + \frac{\sin n}{n}$};
+  \node[nbgreen!70!black, anchor=west, font=\small] at (axis cs:3.5,0.42) {$a_n = 1 - \frac1n$};
+  \node[nbblue, anchor=west, font=\small] at (axis cs:8.3,1.5) {$b_n = 1 + \frac{\sin n}{n}$};
 \end{axis}
 \end{tikzpicture}
 ```
@@ -598,7 +598,7 @@ $\lim a_n = +\infty$, $\lim a_n = -\infty$
 :   $\exists \delta > 0\ \forall n \in \N\colon |d_n| > \delta$; [-@def:lec04:separated].
 
 Арифметика предела
-:   пределы суммы, разности, произведения и частного (при $b \ne 0$, $b_n \ne 0$) равны сумме, разности, произведению и частному пределов; [-@thm:lec04:product], [-@thm:lec04:quotient].
+:   пределы суммы, разности, произведения и частного (при $b \ne 0$, $b_n \ne 0$) равны сумме, разности, произведению и частному пределов; [-@thm:lec03:sum], [-@thm:lec04:product], [-@thm:lec04:quotient].
 
 Предельный переход в неравенствах
 :   из $a_n \ge b_n$ (с некоторого номера), $a_n \to a$, $b_n \to b$ следует $a \ge b$; [-@thm:lec04:inequality].

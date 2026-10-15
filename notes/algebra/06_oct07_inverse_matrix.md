@@ -265,7 +265,7 @@ $$A^T (A^{-1})^T = (A^{-1} A)^T = E^T = E, \qquad (A^{-1})^T A^T = (A A^{-1})^T 
 
 $A$ и $B$ — матрицы элементарных преобразований $(1) \to (1) + (2)$ и $(2) \to (2) + (1)$, поэтому $A^{-1} = \begin{pmatrix} 1 & -1 \\ 0 & 1 \end{pmatrix}$, $B^{-1} = \begin{pmatrix} 1 & 0 \\ -1 & 1 \end{pmatrix}$ (матрицы обратных преобразований). Тогда
 $$B^{-1} A^{-1} = \begin{pmatrix} 1 & 0 \\ -1 & 1 \end{pmatrix} \begin{pmatrix} 1 & -1 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1 & -1 \\ -1 & 2 \end{pmatrix}.$$
-Проверка: $AB = \begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}$, и $\begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix} \begin{pmatrix} 1 & -1 \\ -1 & 2 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$. А $A^{-1} B^{-1} = \begin{pmatrix} 1 & -1 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ -1 & 1 \end{pmatrix} = \begin{pmatrix} 2 & -1 \\ -1 & 1 \end{pmatrix}$ — это обратная к $BA$, а не к $AB$.
+Проверка: $AB = \begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}$, и произведение $AB \cdot B^{-1}A^{-1}$ равно $E$: $(2, 1) \cdot (1, -1)^T = 1$, $(2, 1) \cdot (-1, 2)^T = 0$, $(1, 1) \cdot (1, -1)^T = 0$, $(1, 1) \cdot (-1, 2)^T = 1$. А $A^{-1} B^{-1} = \begin{pmatrix} 1 & -1 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ -1 & 1 \end{pmatrix} = \begin{pmatrix} 2 & -1 \\ -1 & 1 \end{pmatrix}$ — это обратная к $BA$, а не к $AB$.
 :::
 
 ::: {.remark #rem:lec06:inverse-traps tag="подводный камень"}
@@ -336,16 +336,15 @@ $$(S_p \cdots S_1 A \mid S_p \cdots S_1 E) = (E \mid B).$$
 \begin{tikzpicture}[scale=0.85, every node/.style={font=\small}]
   \draw[thick] (0,0) rectangle (1.4,1.4); \node at (0.7,0.7) {$A$};
   \draw[thick] (1.4,0) rectangle (2.8,1.4); \node at (2.1,0.7) {$E$};
-  \draw[thick] (1.4,-0.1) -- (1.4,1.5);
-  \draw[-{Stealth}, thick] (3.1,0.7) -- (4.6,0.7) node[midway, above] {$S_1$};
-  \draw[thick] (4.9,0) rectangle (6.5,1.4); \node at (5.7,0.7) {$S_1 A$};
-  \draw[thick] (6.5,0) rectangle (8.1,1.4); \node at (7.3,0.7) {$S_1 E$};
-  \draw[-{Stealth}, thick] (8.4,0.7) -- (9.6,0.7) node[midway, above] {$S_2, \dots, S_p$};
-  \draw[thick, fill=nbgreen!12] (9.9,0) rectangle (11.3,1.4); \node at (10.6,0.7) {$E$};
-  \draw[thick, fill=nbblue!12] (11.3,0) rectangle (12.7,1.4); \node at (12,0.7) {$A^{-1}$};
-  \node[nbgreen!60!black, align=center] at (10.6,-0.7) {$S A = E$};
-  \node[nbblue, align=center] at (12,-0.7) {$S E = S$};
-  \node[align=center, nbgray] at (6.5,-0.9) {только строки: \\ умножение слева};
+  \draw[-{Stealth}, thick] (3.1,0.7) -- (4.5,0.7) node[midway, above] {$S_1$};
+  \draw[thick] (4.8,0) rectangle (6.4,1.4); \node at (5.6,0.7) {$S_1 A$};
+  \draw[thick] (6.4,0) rectangle (8.0,1.4); \node at (7.2,0.7) {$S_1 E$};
+  \draw[-{Stealth}, thick] (8.3,0.7) -- (10.3,0.7) node[midway, above] {$S_2, \dots, S_p$};
+  \draw[thick, fill=nbgreen!12] (10.6,0) rectangle (12.2,1.4); \node at (11.4,0.7) {$E$};
+  \draw[thick, fill=nbblue!12] (12.2,0) rectangle (13.8,1.4); \node at (13,0.7) {$A^{-1}$};
+  \node[nbgreen!60!black] at (11.4,-0.45) {$S A = E$};
+  \node[nbblue] at (13,-0.95) {$S E = S$};
+  \node[align=center, nbgray] at (6.4,-0.8) {только строки: \\ умножение слева};
 \end{tikzpicture}
 ```
 
