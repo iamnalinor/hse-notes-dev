@@ -505,7 +505,8 @@ $$|x_n + y_n| \ge |x_n| - |y_n| > (M + C) - C = M.$$
 :::
 
 ::: {.problem #prob:lec04:kr5}
-Вычислите: (a) $\lim\left(\dfrac{n^2 + 2n - 1}{2n - 7} - \dfrac{2n^2 + 1}{4n - 1}\right)$; (b) $\lim\left(\sqrt{n + \sqrt{n + \sqrt n}} - \sqrt n\right)$.
+Вычислите:
+$$\text{(a) } \lim\left(\dfrac{n^2 + 2n - 1}{2n - 7} - \dfrac{2n^2 + 1}{4n - 1}\right); \qquad \text{(b) } \lim\left(\sqrt{n + \sqrt{n + \sqrt n}} - \sqrt n\right).$$
 :::
 
 ::: answer
@@ -514,7 +515,7 @@ $$|x_n + y_n| \ge |x_n| - |y_n| > (M + C) - C = M.$$
 
 ::: solution
 (a) Каждая дробь — б.б., разность — неопределённость $\infty - \infty$. *Ключ:* привести к общему знаменателю.
-$$(n^2 + 2n - 1)(4n - 1) - (2n^2 + 1)(2n - 7) = (4n^3 + 7n^2 - 6n + 1) - (4n^3 - 14n^2 + 2n - 7) = 21n^2 - 8n + 8,$$
+$$\begin{aligned} (n^2 + 2n - 1)(4n - 1) - (2n^2 + 1)(2n - 7) &= (4n^3 + 7n^2 - 6n + 1) - (4n^3 - 14n^2 + 2n - 7) \\ &= 21n^2 - 8n + 8, \end{aligned}$$
 знаменатель $(2n - 7)(4n - 1) = 8n^2 - 30n + 7$. Отношение многочленов второй степени стремится к $\frac{21}{8}$.
 
 (b) Сопряжённое: $\dfrac{\sqrt{n + \sqrt n}}{\sqrt{n + \sqrt{n + \sqrt n}} + \sqrt n}$. Делим на $\sqrt n$:
