@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Конспекты лекций ПИ ФКН ВШЭ: алгебра, матанализ, дискретная математика" />
+    <meta name="theme-color" content="#fcfbf7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1916" media="(prefers-color-scheme: dark)" />
+    <title>Конспекты ПИ ФКН</title>
+    <link href="%BASE_URL%favicon.svg" rel="icon" type="image/svg+xml" />
+    <script>
+      (function () {
+        var saved;
+        try {
+          saved = localStorage.getItem("theme");
+        } catch (_) {}
+        var dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

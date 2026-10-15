@@ -1,0 +1,28 @@
+name: Setup web
+description: Install Bun (version from web/.bun-version) and the frontend dependencies, with a cache.
+
+# The cache is written by main only: pull requests restore main's and never upload their own.
+runs:
+  using: composite
+  steps:
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version-file: web/.bun-version
+
+    - uses: actions/cache/restore@v4
+      id: bun-cache
+      with:
+        path: ~/.bun/install/cache
+        key: bun-${{ runner.os }}-${{ hashFiles('web/bun.lock') }}
+        restore-keys: bun-${{ runner.os }}-
+
+    - name: Install dependencies
+      shell: bash
+      working-directory: web
+      run: bun install --frozen-lockfile
+
+    - if: github.ref == 'refs/heads/main' && steps.bun-cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        path: ~/.bun/install/cache
+        key: bun-${{ runner.os }}-${{ hashFiles('web/bun.lock') }}

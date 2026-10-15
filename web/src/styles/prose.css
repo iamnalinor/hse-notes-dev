@@ -1,0 +1,166 @@
+/* Typography of the notes text: the HTML fragments from the build land inside `.prose-notes`. */
+.prose-notes {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+.prose-notes p {
+  margin: 0 0 0.85em;
+  hyphens: auto;
+}
+
+.prose-notes ul,
+.prose-notes ol {
+  margin: 0 0 0.85em;
+  padding-left: 1.3em;
+}
+
+.prose-notes ul {
+  list-style: disc;
+}
+
+.prose-notes ol {
+  list-style: decimal;
+}
+
+.prose-notes li {
+  margin: 0.25em 0;
+}
+
+.prose-notes li > p {
+  margin-bottom: 0.4em;
+}
+
+.prose-notes strong {
+  font-weight: 700;
+}
+
+.prose-notes a:not(.ref) {
+  text-underline-offset: 3px;
+}
+
+.prose-notes hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2em 0;
+}
+
+.prose-notes code {
+  font-size: 0.9em;
+}
+
+.prose-notes dl {
+  margin: 0;
+}
+
+.prose-notes dt {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 1em;
+}
+
+.prose-notes dd {
+  margin: 0.15em 0 0;
+}
+
+.prose-notes details.nb-answers {
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.6em 1em;
+}
+
+.prose-notes details.nb-answers > summary {
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.prose-notes table {
+  border-collapse: collapse;
+  font-size: 0.87em;
+  min-width: 100%;
+}
+
+.prose-notes th {
+  border-bottom: 1.5px solid var(--ink);
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.prose-notes td {
+  border-bottom: 1px solid var(--rule);
+  padding: 7px 12px;
+  vertical-align: top;
+}
+
+.prose-notes img {
+  height: auto;
+  max-width: 100%;
+}
+
+:root[data-theme="dark"] .prose-notes figure img {
+  filter: invert(0.9) hue-rotate(180deg);
+}
+
+.prose-notes .katex {
+  font-size: 1.04em;
+}
+
+.math-display {
+  display: block;
+  margin: 0.9em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 0;
+}
+
+.math-display .katex-display {
+  margin: 0;
+}
+
+.nb-eq {
+  display: block;
+}
+
+.ref {
+  border-bottom: 1px solid color-mix(in srgb, var(--def) 40%, transparent);
+  color: var(--def);
+  text-decoration: none;
+}
+
+.ref:hover {
+  background: color-mix(in srgb, var(--def) 10%, transparent);
+  border-bottom-color: var(--def);
+}
+
+.prose-notes figure {
+  margin: 30px 0;
+}
+
+.prose-notes figure img {
+  display: block;
+  margin: 0 auto;
+}
+
+.prose-notes figcaption {
+  color: var(--muted);
+  font-size: 0.82em;
+  line-height: 1.45;
+  margin-top: 12px;
+}
+
+.prose-notes .nb-fig-num {
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 0.9em;
+  font-weight: 600;
+  margin-right: 4px;
+}

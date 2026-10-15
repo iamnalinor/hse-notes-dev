@@ -1,0 +1,31 @@
+version: 2
+updates:
+  # Every Dependabot PR costs CI minutes: monthly, minor/patch bumps grouped.
+  - package-ecosystem: bun
+    directory: /web
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    groups:
+      lint:
+        patterns: ["eslint*", "@eslint*", "typescript-eslint", "@biomejs/*", "knip", "jscpd", "dependency-cruiser", "@tsconfig/*"]
+      test:
+        patterns: ["vitest", "@vitest/*", "@testing-library/*", "jsdom"]
+      everything-else:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      # A TypeScript major waits until typescript-eslint and knip support it.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
+  - package-ecosystem: uv
+    directory: /
+    schedule:
+      interval: monthly

@@ -1,0 +1,101 @@
+name: Pages
+
+# Publishes the site to GitHub Pages after "Build notes" succeeded on main (its `site-data`
+# and `pdf` artifacts are the content), or by hand. workflow_run keeps a commit whose notes
+# failed to build from being deployed; `head_sha` pins the exact commit that was built.
+on:
+  workflow_run:
+    workflows: ["Build notes"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  pages: write
+  id-token: write
+
+# Deploys never interleave and are never cancelled half-way.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  CI: 1
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  build:
+    name: Build site
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - uses: ./.github/actions/setup-web
+
+      - name: Find the notes build to publish
+        id: notes
+        run: |
+          RUN_ID="${{ github.event.workflow_run.id }}"
+          if [ -z "$RUN_ID" ]; then
+            RUN_ID="$(gh run list --workflow "Build notes" --branch main --status success --limit 1 --json databaseId --jq '.[0].databaseId')"
+          fi
+          test -n "$RUN_ID"
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-data
+          path: web/public/data
+          run-id: ${{ steps.notes.outputs.run_id }}
+          github-token: ${{ github.token }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: pdf
+          path: web/public/pdf
+          run-id: ${{ steps.notes.outputs.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Drop the review pages of the notes build (the site renders the fragments itself)
+        run: find web/public/data -name index.html -delete
+
+      - uses: actions/configure-pages@v5
+        id: pages
+
+      - name: Build
+        working-directory: web
+        env:
+          # https://<owner>.github.io/<repo>/ → "/<repo>/"
+          BASE_PATH: /${{ github.event.repository.name }}/
+        run: bun run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
+
+      - name: Smoke test
+        run: |
+          URL="${{ steps.deployment.outputs.page_url }}"
+          for i in 1 2 3 4 5 6; do
+            curl --fail --silent "${URL}data/courses.json" >/dev/null && break
+            sleep 10
+          done
+          curl --fail --silent "${URL}" | grep -q '<div id="root">'
+          curl --fail --silent --head "${URL}pdf/algebra-registry.pdf" >/dev/null

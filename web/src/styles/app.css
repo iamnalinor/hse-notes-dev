@@ -1,0 +1,148 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+@import "./fonts.css";
+@import "./prose.css";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Palette from the design (light = «Учебник», dark = the night-before-the-exam variant). */
+:root {
+  color-scheme: light;
+  --paper: #fcfbf7;
+  --card: #fff;
+  --ink: #1d1b18;
+  --muted: #6b665e;
+  --faint: #8c867b;
+  --rule: #e3ded3;
+  --wash: #f3f0e8;
+  --brand: #0f2d69;
+  --def: #2b5797;
+  --thm: #9c4f12;
+  --ex: #2e7d4f;
+  --rem: #6e6e6e;
+  --prob: #6a3d9a;
+  --red: #b03a2e;
+  --org: #c76a00;
+  --flash: #d6aa28;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #1a1916;
+  --card: #221f1b;
+  --ink: #ece7dd;
+  --muted: #a49e92;
+  --faint: #857f73;
+  --rule: #36332d;
+  --wash: #2a2722;
+  --brand: #2e4f94;
+  --def: #86aee6;
+  --thm: #e09a5f;
+  --ex: #73c694;
+  --rem: #a49e92;
+  --prob: #b99be0;
+  --red: #ec8a7d;
+  --org: #e8a24e;
+  --flash: #e8c65e;
+}
+
+/* Derived tints: a hue mixed into the paper (backgrounds) or into the ink (small text). */
+:root {
+  --def-soft: color-mix(in srgb, var(--def) 5%, var(--paper));
+  --thm-soft: color-mix(in srgb, var(--thm) 5%, var(--paper));
+  --ex-soft: color-mix(in srgb, var(--ex) 14%, var(--paper));
+  --red-soft: color-mix(in srgb, var(--red) 14%, var(--paper));
+  --org-soft: color-mix(in srgb, var(--org) 16%, var(--paper));
+  --prob-soft: color-mix(in srgb, var(--prob) 5%, var(--paper));
+  --def-chip: color-mix(in srgb, var(--def) 14%, var(--paper));
+  --def-deep: color-mix(in srgb, var(--def) 80%, var(--ink));
+  --ex-deep: color-mix(in srgb, var(--ex) 75%, var(--ink));
+  --red-deep: color-mix(in srgb, var(--red) 80%, var(--ink));
+  --org-deep: color-mix(in srgb, var(--org) 75%, var(--ink));
+}
+
+@theme inline {
+  --font-sans: "HSE Sans", "Helvetica Neue", arial, sans-serif;
+  --font-serif: "CMU Serif", georgia, serif;
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-rule: var(--rule);
+  --color-wash: var(--wash);
+  --color-brand: var(--brand);
+  --color-def: var(--def);
+  --color-thm: var(--thm);
+  --color-ex: var(--ex);
+  --color-rem: var(--rem);
+  --color-prob: var(--prob);
+  --color-red: var(--red);
+  --color-org: var(--org);
+  --color-def-soft: var(--def-soft);
+  --color-thm-soft: var(--thm-soft);
+  --color-ex-soft: var(--ex-soft);
+  --color-red-soft: var(--red-soft);
+  --color-org-soft: var(--org-soft);
+  --color-prob-soft: var(--prob-soft);
+  --color-def-chip: var(--def-chip);
+  --color-def-deep: var(--def-deep);
+  --color-ex-deep: var(--ex-deep);
+  --color-red-deep: var(--red-deep);
+  --color-org-deep: var(--org-deep);
+}
+
+@layer base {
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  a {
+    color: var(--def);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--def);
+    outline-offset: 2px;
+  }
+}
+
+@keyframes flash {
+  0% {
+    box-shadow:
+      0 0 0 4px color-mix(in srgb, var(--flash) 30%, transparent),
+      0 0 0 1px var(--flash);
+  }
+
+  70% {
+    box-shadow:
+      0 0 0 4px color-mix(in srgb, var(--flash) 30%, transparent),
+      0 0 0 1px var(--flash);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 0 transparent,
+      0 0 0 0 transparent;
+  }
+}
+
+.flash {
+  animation: flash 2.4s ease-out;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flash {
+    animation: none;
+    box-shadow: 0 0 0 3px var(--flash);
+  }
+}

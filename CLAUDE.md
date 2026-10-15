@@ -12,3 +12,7 @@ uv run pytest -q                # тесты фильтра, сборки, ли�
 ```
 
 Код пайплайна: `filters/notes.lua` (нумерация, блоки, ссылки), `templates/` (LaTeX-стиль, шаблоны, макросы), `scripts/` (сборка, линт). CI — `.github/workflows/build.yml`. `build/`, `.cache/`, `sources/` не коммитятся.
+
+## Сайт (`web/`)
+
+Фронтенд — React + Vite + Bun, макет в `design.html`. Читай `web/README.md`. После любой правки в `web/` запускай `bun run lint` (из `web/`): это единственная точка входа, она сама чинит формат и сортировку. Правила линтера не ослаблять — чинить код; отключать правило можно только с причиной. Тесты — `bun run test`. Деплой — `.github/workflows/pages.yml` на каждый push в `main` (после «Build notes»); статус смотреть через `gh run list --workflow Pages`.

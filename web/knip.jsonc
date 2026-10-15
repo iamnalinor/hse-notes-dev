@@ -1,0 +1,8 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreExportsUsedInFile": true,
+  "entry": ["scripts/*.ts", "*.config.ts"],
+  "project": ["src/**/*.{ts,tsx}", "scripts/*.ts"],
+  // Types picked up by TypeScript implicitly (katex ships no types of its own).
+  "ignoreDependencies": ["@types/katex"]
+}
