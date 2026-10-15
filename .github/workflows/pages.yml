@@ -70,8 +70,8 @@ jobs:
       - name: Build
         working-directory: web
         env:
-          # https://<owner>.github.io/<repo>/ → "/<repo>/"
-          BASE_PATH: /${{ github.event.repository.name }}/
+          # "" on a custom domain (notes.nalinor.dev), "/<repo>" on <owner>.github.io/<repo>
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}/
         run: bun run build
 
       - uses: actions/upload-pages-artifact@v3
