@@ -1,0 +1,25 @@
+% Общая преамбула рисунков: подключается и в PDF (notes.sty), и при сборке SVG.
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.pathreplacing,decorations.markings,
+  patterns,intersections,shapes.geometric,backgrounds,fit,matrix,graphs,quotes,angles}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+\definecolor{nbblue}{HTML}{2B5797}
+\definecolor{nbred}{HTML}{B03A2E}
+\definecolor{nbgreen}{HTML}{2E7D4F}
+\definecolor{nborange}{HTML}{C76A00}
+\definecolor{nbgray}{HTML}{6B6B6B}
+\tikzset{
+  >={Stealth[length=2.2mm]},
+  every picture/.style={line cap=round, line join=round},
+  aux/.style={densely dashed, nbgray},
+  dot/.style={circle, fill, inner sep=1.2pt},
+  hole/.style={circle, draw, fill=white, inner sep=1.2pt},
+}
+\pgfplotsset{
+  nbaxis/.style={axis lines=middle, axis line style={->}, xlabel={$x$}, ylabel={$y$},
+    every axis x label/.style={at={(ticklabel* cs:1)}, anchor=west},
+    every axis y label/.style={at={(ticklabel* cs:1)}, anchor=south},
+    tick label style={font=\small}, samples=200, smooth},
+}

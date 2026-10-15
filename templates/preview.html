@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{title}}</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<style>
+  /* Превью html-версии для ревью. Не сайт: сайт будет отдельным генератором поверх site-data. */
+  :root {
+    --fg: #1d1d1f; --muted: #6b6b6b; --bg: #fdfdfc; --line: #e4e2dc;
+    --def: #2b5797; --thm: #9c4f12; --ex: #2e7d4f; --rem: #7a7a7a; --prob: #6a3d9a;
+    --warn: #b03a2e; --corner: #c76a00; --link: #1f4e9c;
+  }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+    font: 17px/1.6 "CMU Serif", "Latin Modern Roman", Georgia, serif; }
+  main { max-width: 46rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  .nb-header { font: 13px/1.4 system-ui, sans-serif; color: var(--muted);
+    border-bottom: 1px solid var(--line); padding-bottom: .4rem; display: flex; justify-content: space-between; }
+  .nb-draft { color: var(--warn); font-weight: 600; }
+  h1.nb-title { font-size: 2rem; line-height: 1.2; margin: 1.2rem 0 .3rem; }
+  .nb-based { color: var(--muted); font-size: .9rem; margin-bottom: 1.5rem; }
+  h1 { font-size: 1.6rem; margin-top: 2.2rem; } h2 { font-size: 1.3rem; margin-top: 1.8rem; } h3 { font-size: 1.1rem; }
+  a { color: var(--link); text-decoration: none; } a:hover { text-decoration: underline; }
+  a.ref { white-space: nowrap; }
+  .nb { margin: 1rem 0; padding: .55rem .9rem; border-radius: 3px; }
+  .nb-head { font-weight: 700; margin-bottom: .2rem; }
+  .nb-body > :first-child { margin-top: 0; } .nb-body > :last-child { margin-bottom: 0; }
+  .nb-style-definition { border: 1px solid color-mix(in srgb, var(--def) 70%, white); background: color-mix(in srgb, var(--def) 5%, white); }
+  .nb-style-theorem { border: 1px solid color-mix(in srgb, var(--thm) 70%, white); background: color-mix(in srgb, var(--thm) 6%, white); }
+  .nb-style-example { border-left: 3px solid var(--ex); }
+  .nb-style-remark { border-left: 3px solid var(--rem); }
+  .nb-style-problem { border-left: 3px solid var(--prob); }
+  .nb-tag-corner-case { border-left-color: var(--corner); }
+  .nb-tag-pitfall, .nb-tag-misconception { border-left-color: var(--warn); }
+  .nb-tag-convention { border-left-color: var(--def); }
+  .nb-badge { color: var(--warn); font-weight: 400; font-size: .85em; }
+  .nb-proof, .nb-solution { margin: .6rem 0 1rem; }
+  .nb-proof > :last-child::after, .nb-solution > :last-child::after { content: " □"; float: right; }
+  .nb-answer { margin: .5rem 0; }
+  details.nb-answers { border-top: 1px solid var(--line); margin-top: 1rem; padding-top: .5rem; }
+  details.nb-answers summary { cursor: pointer; font-weight: 700; }
+  figure.nb-figure { margin: 1.2rem 0; text-align: center; }
+  figure.nb-figure img { max-width: 100%; height: auto; }
+  figure.nb-figure figcaption { font-size: .9rem; color: var(--muted); margin-top: .3rem; }
+  .nb-fig-num { font-weight: 700; color: var(--fg); }
+  .math.display { display: block; overflow-x: auto; overflow-y: hidden; }
+  dl dt { font-weight: 700; margin-top: .6rem; } dl dd { margin-left: 1.5rem; }
+  table { border-collapse: collapse; margin: 1rem 0; } th, td { border: 1px solid var(--line); padding: .3rem .6rem; }
+  :target { scroll-margin-top: 1rem; animation: flash 1.6s ease-out; }
+  @keyframes flash { from { background: #fff3b0; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="nb-header"><span>{{header_line}}</span>{{draft}}</div>
+  <h1 class="nb-title">{{title}}</h1>
+  <div class="nb-based">Основано на: {{based_on}}</div>
+  {{content}}
+</main>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var macros = {{macros}};
+    document.querySelectorAll("span.math").forEach(function (el) {
+      var display = el.classList.contains("display");
+      var tex = el.textContent.replace(/^\\[\[(]/, "").replace(/\\[\])]$/, "");
+      try { katex.render(tex, el, { displayMode: display, macros: macros, throwOnError: false }); }
+      catch (e) { el.style.color = "red"; }
+    });
+  });
+</script>
+</body>
+</html>

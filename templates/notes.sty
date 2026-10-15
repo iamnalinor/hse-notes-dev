@@ -1,0 +1,117 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{notes}[2026/10/14 Конспекты ПИ ФКН ВШЭ]
+% Единый стиль конспектов и реестров. Конспекты сами окружений не определяют:
+% всё, что нужно, генерирует filters/notes.lua из Markdown-разметки (context/markup.md).
+
+\input{fonts.tex}
+\RequirePackage{amsmath,amssymb,amsthm,mathtools}
+\RequirePackage[a4paper,top=2.4cm,bottom=2.4cm,left=2.3cm,right=2.3cm,headsep=0.6cm,headheight=14pt]{geometry}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{microtype}
+\RequirePackage{needspace}
+\input{tikz-preamble.tex}
+\input{macros.tex}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em plus 0.2em minus 0.1em}
+\setlist{itemsep=0.15em, topsep=0.3em}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[2]
+\setcounter{secnumdepth}{-\maxdimen}
+
+% ---------------------------------------------------------------- цвета
+\definecolor{nbdef}{HTML}{2B5797}
+\definecolor{nbthm}{HTML}{9C4F12}
+\definecolor{nbex}{HTML}{2E7D4F}
+\definecolor{nbrem}{HTML}{7A7A7A}
+\definecolor{nbprob}{HTML}{6A3D9A}
+\definecolor{nbwarn}{HTML}{B03A2E}
+\definecolor{nbconv}{HTML}{2B5797}
+\definecolor{nbcorner}{HTML}{C76A00}
+\definecolor{nblink}{HTML}{1F4E9C}
+
+% ---------------------------------------------------------------- метаданные (§4 ТЗ)
+\newcommand{\course}[1]{\def\nbcourse{#1}}
+\newcommand{\coursename}[1]{\def\nbcoursename{#1}}
+\newcommand{\lecturenumber}[1]{\def\nblecturenumber{#1}}
+\newcommand{\lecturedate}[1]{\def\nblecturedate{#1}}
+\newcommand{\notestitle}[1]{\def\nbnotestitle{#1}}
+\newcommand{\basis}[1]{\def\nbbasis{#1}}
+\newcommand{\nbheaderline}[1]{\def\nbheader{#1}}
+\newif\ifnbforecast
+\nbheaderline{}
+
+% ---------------------------------------------------------------- колонтитул
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{black!65}\nbheader}
+\fancyhead[R]{\ifnbforecast\small\color{nbwarn}\textbf{черновик}\fi}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{}
+
+% ---------------------------------------------------------------- заголовки
+\titleformat{\section}{\Large\bfseries}{}{0pt}{}
+\titleformat{\subsection}{\large\bfseries}{}{0pt}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.6em}{0.6em}
+\titlespacing*{\subsection}{0pt}{1.2em}{0.4em}
+\titlespacing*{\subsubsection}{0pt}{0.9em}{0.3em}
+
+\newcommand{\nbmaketitle}[2]{%
+  \begingroup
+  \vspace*{0.2em}%
+  {\LARGE\bfseries #1\par}%
+  \vspace{0.5em}%
+  {\small\color{black!70}Основано на: #2\ifnbforecast\ \textcolor{nbwarn}{(черновик)}\fi\par}%
+  \vspace{0.8em}%
+  \endgroup}
+
+% ---------------------------------------------------------------- блоки (§6 ТЗ)
+\tcbset{
+  nb/base/.style={enhanced, breakable, before skip=0.7em, after skip=0.7em,
+    left=6pt, right=6pt, top=4pt, bottom=4pt, parbox=false,
+    before upper={\setlength{\parskip}{0.45em}}},
+  nb/framed/.style={nb/base, boxrule=0.6pt, arc=1.5pt},
+  nb/bar/.style={nb/base, frame hidden, colback=white, sharp corners, left=9pt,
+    borderline west={2.2pt}{0pt}{#1}},
+  nb/definition/.style={nb/framed, colframe=nbdef!75!black, colback=nbdef!4},
+  nb/theorem/.style={nb/framed, colframe=nbthm!80!black, colback=nbthm!5},
+  nb/example/.style={nb/bar=nbex},
+  nb/remark/.style={nb/bar=nbrem},
+  nb/problem/.style={nb/bar=nbprob},
+  nb/tag-/.style={},
+  nb/tag-corner-case/.style={borderline west={2.2pt}{0pt}{nbcorner}},
+  nb/tag-pitfall/.style={borderline west={2.2pt}{0pt}{nbwarn}},
+  nb/tag-misconception/.style={borderline west={2.2pt}{0pt}{nbwarn}},
+  nb/tag-convention/.style={borderline west={2.2pt}{0pt}{nbconv}},
+  nb/tag-reminder/.style={},
+}
+\newcommand{\nbanchor}[1]{\if\relax\detokenize{#1}\relax\else\phantomsection\label{#1}\fi}
+% #1 стиль, #2 пометка (slug), #3 метка; заголовок ставит \nbhead в начале первого абзаца
+\newenvironment{nbblock}[3]{%
+  \begin{tcolorbox}[nb/#1, nb/tag-#2]\nbanchor{#3}}{%
+  \end{tcolorbox}}
+\newcommand{\nbhead}[1]{\textbf{#1}.\enspace\ignorespaces}
+\newcommand{\nbbadge}[1]{\ \textcolor{nbwarn}{\footnotesize[#1]}}
+
+\renewcommand{\qedsymbol}{$\square$}
+\newenvironment{nbproof}[1]{\begin{proof}[#1]}{\end{proof}}
+\newenvironment{nbanswer}{\par}{\par}
+\newenvironment{nbanswers}{\par\medskip\needspace{4\baselineskip}\noindent\textbf{Ответы}\par\nopagebreak}{\par}
+
+% ---------------------------------------------------------------- рисунки (§7 ТЗ)
+% рисунок и подпись не разрываются страницей: всё в одном minipage
+\newenvironment{nbfigure}{\par\medskip\noindent\begin{minipage}{\linewidth}\centering}{\end{minipage}\par\medskip}
+\newcommand{\nbfigcaption}[2]{\par\smallskip{\small\textbf{Рис.~#1.} #2\par}}
+
+% ---------------------------------------------------------------- ссылки
+\RequirePackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=nblink, urlcolor=nblink, citecolor=nblink,
+  bookmarksnumbered=false, pdfencoding=auto}
+\RequirePackage{bookmark}
