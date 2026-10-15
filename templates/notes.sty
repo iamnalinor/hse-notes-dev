@@ -106,8 +106,9 @@
 \newenvironment{nbanswers}{\par\medskip\needspace{4\baselineskip}\noindent\textbf{Ответы}\par\nopagebreak}{\par}
 
 % ---------------------------------------------------------------- рисунки (§7 ТЗ)
-\newenvironment{nbfigure}{\par\medskip\begin{center}}{\end{center}\medskip}
-\newcommand{\nbfigcaption}[2]{\par\smallskip{\small\textbf{Рис.~#1.} #2}}
+% рисунок и подпись не разрываются страницей: всё в одном minipage
+\newenvironment{nbfigure}{\par\medskip\noindent\begin{minipage}{\linewidth}\centering}{\end{minipage}\par\medskip}
+\newcommand{\nbfigcaption}[2]{\par\smallskip{\small\textbf{Рис.~#1.} #2\par}}
 
 % ---------------------------------------------------------------- ссылки
 \RequirePackage{hyperref}
