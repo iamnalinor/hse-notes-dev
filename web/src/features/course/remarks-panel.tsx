@@ -58,7 +58,7 @@ export const RemarksPanel = ({ course }: { readonly course: string }) => {
               </Link>
               <span>Лекция {label.lecture}</span>
             </div>
-            <div className="text-[15px]">
+            <div className="max-h-36 overflow-hidden mask-[linear-gradient(to_bottom,black_70%,transparent)] [&_.prose-notes]:text-[14.5px] [&_.prose-notes]:leading-snug">
               <RemarkExcerpt course={course} label={label} />
             </div>
           </div>
