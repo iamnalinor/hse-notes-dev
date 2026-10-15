@@ -243,7 +243,7 @@ $$AB = \frac{1}{\det A} A \tilde A = \frac{1}{\det A} \det A \cdot E = E, \qquad
 
 Как обратная матрица ведёт себя при умножении и транспонировании? Ответ похож на правило $(AB)^T = B^T A^T$ (теорема [-@thm:lec02:transpose-props]).
 
-::: {.proposition #prop:lec06:product-transpose title="обратная к произведению и к транспонированной"}
+::: {.proposition #prop:lec06:product-transpose title="свойства обратной матрицы"}
 Пусть $A, B \in M_n(\R)$ обратимы. Тогда $AB$ и $A^T$ обратимы и
 $$(AB)^{-1} = B^{-1} A^{-1}, \qquad (A^T)^{-1} = (A^{-1})^T.$$ {#eq:lec06:product-inverse}
 :::
